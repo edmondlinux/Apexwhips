@@ -15,6 +15,8 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showRecommendations, setShowRecommendations] = useState(false);
 
+  const [showNavSearch, setShowNavSearch] = useState(false);
+
   const towns = useMemo(() => {
     return gbData.map(t => ({
       id: t.city.toLowerCase().replace(/\s+/g, '-'),
@@ -71,6 +73,57 @@ export default function HomePage() {
           
           <div className="hidden md:flex items-center gap-6">
             <Link href="/shop" className="text-sm font-bold text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-widest">Shop All</Link>
+            
+            <div className="relative flex items-center">
+              <button 
+                onClick={() => setShowNavSearch(!showNavSearch)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-orange-500"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+
+              {showNavSearch && (
+                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 p-2 z-50">
+                  <div className="relative">
+                    <input 
+                      autoFocus
+                      type="text"
+                      placeholder="Search towns..."
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        setShowRecommendations(true);
+                      }}
+                      onBlur={() => {
+                        setTimeout(() => setShowRecommendations(false), 200);
+                      }}
+                      onFocus={() => setShowRecommendations(true)}
+                      className="w-full bg-gray-50 border-none h-10 pl-4 pr-4 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-orange-500/20 outline-none"
+                    />
+                    
+                    {showRecommendations && recommendations.length > 0 && (
+                      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50 max-h-60 overflow-y-auto">
+                        {recommendations.map((rec) => (
+                          <Link 
+                            key={rec.id}
+                            href={`/towns/${rec.id}`}
+                            onClick={() => setShowNavSearch(false)}
+                            className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0"
+                          >
+                            <MapPin className="h-4 w-4 text-orange-500" />
+                            <div>
+                              <div className="font-bold text-gray-900 text-xs">{rec.name}</div>
+                              <div className="text-[8px] font-black text-gray-400 uppercase tracking-widest">{rec.admin}</div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="flex flex-col items-end">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Current Pricing</span>
               <div className="flex items-center gap-3">
@@ -107,45 +160,6 @@ export default function HomePage() {
                 The industry standard for automotive smart integration. 
                 Same-day delivery available across all major UK territories.
               </p>
-
-              <div className="relative max-w-xl mx-auto group">
-                <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
-                </div>
-                <input 
-                  type="text"
-                  placeholder="Enter your town or city..."
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowRecommendations(true);
-                  }}
-                  onBlur={() => {
-                    // Slight delay to allow clicks on recommendations to register
-                    setTimeout(() => setShowRecommendations(false), 200);
-                  }}
-                  onFocus={() => setShowRecommendations(true)}
-                  className="w-full bg-white border-2 border-gray-100 h-18 pl-16 pr-6 rounded-3xl text-lg font-semibold focus:outline-none focus:border-orange-500/30 focus:ring-4 focus:ring-orange-500/5 transition-all shadow-xl shadow-gray-100/50"
-                />
-                
-                {showRecommendations && recommendations.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
-                    {recommendations.map((rec) => (
-                      <Link 
-                        key={rec.id}
-                        href={`/towns/${rec.id}`}
-                        className="flex items-center gap-3 px-6 py-4 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0"
-                      >
-                        <MapPin className="h-4 w-4 text-orange-500" />
-                        <div>
-                          <div className="font-bold text-gray-900">{rec.name}</div>
-                          <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{rec.admin}</div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </section>
