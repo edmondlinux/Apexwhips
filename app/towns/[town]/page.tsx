@@ -124,7 +124,7 @@ export default async function TownPage({ params }: Props) {
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-orange-100 blur-[100px] rounded-full -z-10 opacity-50" />
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-[0.9] mb-6">
-              ORDER IN <br />
+              SMARTWHIP IN <br />
               <span className="text-orange-500 italic">{townData.city.toUpperCase()}</span>
             </h1>
             <p className="text-xl text-gray-500 font-medium leading-relaxed">
