@@ -1,4 +1,17 @@
 [
   { "id": "london", "name": "London" },
-  { "id": "manchester", "name": "Manchester" }
+  { "id": "manchester", "name": "Manchester" },
+  { "id": "birmingham", "name": "Birmingham" },
+  { "id": "leeds", "name": "Leeds" },
+  { "id": "liverpool", "name": "Liverpool" },
+  { "id": "glasgow", "name": "Glasgow" },
+  { "id": "sheffield", "name": "Sheffield" },
+  { "id": "bristol", "name": "Bristol" },
+  { "id": "edinburgh", "name": "Edinburgh" },
+  { "id": "leicester", "name": "Leicester" },
+  { "id": "coventry", "name": "Coventry" },
+  { "id": "belfast", "name": "Belfast" },
+  { "id": "nottingham", "name": "Nottingham" },
+  { "id": "hull", "name": "Hull" },
+  { "id": "newcastle", "name": "Newcastle" }
 ]
