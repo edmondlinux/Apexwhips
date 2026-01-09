@@ -73,7 +73,17 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {displayedTowns.map((town) => (
                 <Card key={town.id} className="overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 rounded-2xl group border-b-4 border-b-orange-500">
-                  <CardHeader className="bg-gray-50/50">
+                  <div className="aspect-square relative overflow-hidden bg-gray-100">
+                    <img 
+                      src="/IMG_1867.jpeg" 
+                      alt={town.name}
+                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full font-bold text-xs uppercase tracking-widest shadow-lg">
+                      Free Delivery
+                    </div>
+                  </div>
+                  <CardHeader className="bg-white">
                     <CardTitle className="text-2xl font-black italic uppercase tracking-tighter text-gray-900 flex justify-between items-center">
                       {town.name}
                       <Zap className="h-5 w-5 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
