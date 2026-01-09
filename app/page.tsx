@@ -92,7 +92,7 @@ export default function HomePage() {
                   <CardContent className="pt-6">
                     <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
                       <span>SmartWhip Pro</span>
-                      <span className="text-orange-500 italic">In Stock</span>
+                      <span className="text-orange-500 italic">£30 or £130 for a case</span>
                     </div>
                     <p className="text-gray-500 text-sm">
                       Immediate delivery available in {town.name}. Professional local service.
