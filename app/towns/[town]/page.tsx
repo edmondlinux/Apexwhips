@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Zap, MapPin, MessageCircle, Send, ArrowLeft, ShieldCheck, Truck, Clock } from 'lucide-react';
@@ -7,6 +8,31 @@ import gbData from '@/data/gb.json';
 
 interface Props {
   params: Promise<{ town: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { town } = await params;
+  const townData = gbData.find(
+    (t) => t.city.toLowerCase().replace(/\s+/g, '-') === town.toLowerCase()
+  );
+
+  if (!townData) return { title: 'Town Not Found' };
+
+  const cityName = townData.city;
+  return {
+    title: `Smartwhip in ${cityName} | Buy Smartwhip ${cityName} - ApexWhips`,
+    description: `Get Smartwhip in ${cityName}. Fast delivery of Smartwhips, Flake, and Fastgas in ${cityName}. Buy Smartwhip for sale in ${cityName} today with rapid dispatch.`,
+    keywords: [
+      `Smartwhip in ${cityName}`,
+      `ballon in ${cityName}`,
+      `flake in ${cityName}`,
+      `${cityName} smartwhip`,
+      `${cityName} flake`,
+      `Fastgas in ${cityName}`,
+      `smartwhips for sale in ${cityName}`,
+      `buy smartwhip in ${cityName}`
+    ]
+  };
 }
 
 export default async function TownPage({ params }: Props) {
