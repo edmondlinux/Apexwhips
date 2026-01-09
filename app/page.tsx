@@ -84,13 +84,13 @@ export default function HomePage() {
       </header>
 
       <main className="flex-grow">
-        <section className="relative pt-24 pb-20 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40 pointer-events-none">
+        <section className="relative pt-24 pb-20 overflow-visible">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40">
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-200 blur-[120px] rounded-full" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-100 blur-[100px] rounded-full" />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="max-w-3xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-8 shadow-2xl shadow-orange-200">
                 <span className="relative flex h-2 w-2">
@@ -108,7 +108,7 @@ export default function HomePage() {
                 Same-day delivery available across all major UK territories.
               </p>
 
-              <div className="relative max-w-xl mx-auto group z-20">
+              <div className="relative max-w-xl mx-auto group">
                 <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
                   <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
                 </div>
@@ -126,7 +126,7 @@ export default function HomePage() {
                 />
                 
                 {showRecommendations && recommendations.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-y-auto max-h-96 z-[100]">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
                     {recommendations.map((rec) => (
                       <Link 
                         key={rec.id}
@@ -147,7 +147,26 @@ export default function HomePage() {
           </div>
         </section>
 
-       
+        <section className="py-12 border-y border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+              {[
+                { icon: Truck, label: 'Fast Delivery', sub: 'Within 2 hours' },
+                { icon: ShieldCheck, label: 'Secure Pay', sub: 'Encrypted apps' },
+                { icon: Clock, label: '24/7 Support', sub: 'Live assistance' },
+                { icon: Zap, label: 'High Grade', sub: 'Medical quality' },
+              ].map((item, idx) => (
+                <div key={idx} className="flex flex-col items-center md:items-start text-center md:text-left gap-3 px-4">
+                  <item.icon className="h-6 w-6 text-orange-500" />
+                  <div>
+                    <div className="font-black text-sm uppercase tracking-tighter">{item.label}</div>
+                    <div className="text-xs text-gray-400 font-bold uppercase tracking-widest">{item.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <section className="py-24 bg-gray-50/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
