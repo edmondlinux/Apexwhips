@@ -147,26 +147,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-12 border-y border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
-              {[
-                { icon: Truck, label: 'Fast Delivery', sub: 'Within 2 hours' },
-                { icon: ShieldCheck, label: 'Secure Pay', sub: 'Encrypted apps' },
-                { icon: Clock, label: '24/7 Support', sub: 'Live assistance' },
-                { icon: Zap, label: 'High Grade', sub: 'Medical quality' },
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center md:items-start text-center md:text-left gap-3 px-4">
-                  <item.icon className="h-6 w-6 text-orange-500" />
-                  <div>
-                    <div className="font-black text-sm uppercase tracking-tighter">{item.label}</div>
-                    <div className="text-xs text-gray-400 font-bold uppercase tracking-widest">{item.sub}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+       
 
         <section className="py-24 bg-gray-50/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
