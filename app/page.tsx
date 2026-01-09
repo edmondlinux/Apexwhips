@@ -40,10 +40,12 @@ export default function HomePage() {
   }, [searchQuery, towns]);
 
   useEffect(() => {
+    let rafId: number;
     const handleScroll = () => {
-      // Rotation logic
-      const rotation = (window.scrollY / 5) % 360;
-      setScrollRotation(rotation);
+      rafId = requestAnimationFrame(() => {
+        const rotation = (window.scrollY / 5) % 360;
+        setScrollRotation(rotation);
+      });
 
       if (
         window.innerHeight + document.documentElement.scrollTop + 200 >=
@@ -60,7 +62,10 @@ export default function HomePage() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [visibleTowns, loading, filteredTowns.length]);
 
   const displayedTowns = filteredTowns.slice(0, visibleTowns);
@@ -162,8 +167,9 @@ export default function HomePage() {
                   <div 
                     style={{ 
                       transform: `rotateY(${scrollRotation}deg) rotateX(${scrollRotation / 2}deg)`,
-                      transition: 'transform 0.1s ease-out'
+                      willChange: 'transform'
                     }}
+                    className="transition-transform duration-75 ease-out"
                   >
                     <Image 
                       src="/logo/logo.jpeg" 
