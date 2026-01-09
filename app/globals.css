@@ -1,6 +1,6 @@
 @import "tailwindcss";
 /*
-  ---break---
+  ---break here---
 */
 @custom-variant dark (&:is(.dark *));
 
