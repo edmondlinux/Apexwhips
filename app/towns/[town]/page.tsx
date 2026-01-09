@@ -35,15 +35,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: `/towns/${town}`,
     },
     keywords: [
-      `Smartwhip in ${cityName}`,
-      `ballon in ${cityName}`,
+      `smartwhips in ${cityName}`,
+      `balloons in ${cityName}`,
       `flake in ${cityName}`,
-      `${cityName} smartwhip`,
-      `${cityName} flake`,
-      `Fastgas in ${cityName}`,
+      `fastgas in ${cityName}`,
       `smartwhips for sale in ${cityName}`,
-      `buy smartwhip in ${cityName}`
-    ]
+      `buy smartwhip in ${cityName}`,
+      `Smartwhip in ${cityName}`,
+      `ballon in ${cityName}`
+    ],
+    openGraph: {
+      title: `Smartwhip in ${cityName} | ApexWhips`,
+      description: `Fast delivery of Smartwhips, Flake, and Fastgas in ${cityName}.`,
+      images: ['/logo/logo.jpeg'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: ['/logo/logo.jpeg'],
+    }
   };
 }
 
