@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: 'Simple Landing Page',
-  description: 'A clean and simple landing page.'
+  title: 'ApexWhips - SmartWhips across the UK',
+  description: 'Premium automotive SmartWhips available for delivery across all major UK towns.'
 };
 
 export const viewport: Viewport = {
