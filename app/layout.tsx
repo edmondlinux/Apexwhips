@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     url: baseUrl,
     images: [
       {
-        url: '/logo/logo.jpeg',
+        url: '/og_image/og_image.jpeg',
         width: 1200,
         height: 630,
         alt: 'ApexWhips Logo',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ApexWhips - Premium SmartWhips UK',
     description: 'Rapid delivery of premium automotive smart technology across the UK.',
-    images: ['/logo/logo.jpeg'],
+    images: ['/og_image/og_image.jpeg'],
   }
 };
 

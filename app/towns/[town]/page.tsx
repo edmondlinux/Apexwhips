@@ -47,11 +47,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `Smartwhip in ${cityName} | ApexWhips`,
       description: `Fast delivery of Smartwhips, Flake, and Fastgas in ${cityName}.`,
-      images: ['/logo/logo.jpeg'],
+      images: ['/og_image/og_image.jpeg'],
     },
     twitter: {
       card: 'summary_large_image',
-      images: ['/logo/logo.jpeg'],
+      images: ['/og_image/og_image.jpeg'],
     }
   };
 }
