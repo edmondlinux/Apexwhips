@@ -108,7 +108,7 @@ export default function HomePage() {
                 Same-day delivery available across all major UK territories.
               </p>
 
-              <div className="relative max-w-xl mx-auto group">
+              <div className="relative max-w-xl mx-auto group z-20">
                 <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
                   <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
                 </div>
@@ -126,7 +126,7 @@ export default function HomePage() {
                 />
                 
                 {showRecommendations && recommendations.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-y-auto max-h-96 z-[60]">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-y-auto max-h-96 z-[100]">
                     {recommendations.map((rec) => (
                       <Link 
                         key={rec.id}
