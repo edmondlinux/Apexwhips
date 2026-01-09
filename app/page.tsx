@@ -84,8 +84,8 @@ export default function HomePage() {
       </header>
 
       <main className="flex-grow">
-        <section className="relative pt-24 pb-20 overflow-visible">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40">
+        <section className="relative pt-24 pb-20 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full -z-10 opacity-40">
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-200 blur-[120px] rounded-full" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-100 blur-[100px] rounded-full" />
           </div>
@@ -120,7 +120,10 @@ export default function HomePage() {
                     setSearchQuery(e.target.value);
                     setShowRecommendations(true);
                   }}
-                  onBlur={() => setTimeout(() => setShowRecommendations(false), 200)}
+                  onBlur={() => {
+                    // Slight delay to allow clicks on recommendations to register
+                    setTimeout(() => setShowRecommendations(false), 200);
+                  }}
                   onFocus={() => setShowRecommendations(true)}
                   className="w-full bg-white border-2 border-gray-100 h-18 pl-16 pr-6 rounded-3xl text-lg font-semibold focus:outline-none focus:border-orange-500/30 focus:ring-4 focus:ring-orange-500/5 transition-all shadow-xl shadow-gray-100/50"
                 />
