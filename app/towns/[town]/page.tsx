@@ -10,6 +10,12 @@ interface Props {
   params: Promise<{ town: string }>;
 }
 
+export async function generateStaticParams() {
+  return gbData.map((town) => ({
+    town: town.city.toLowerCase().replace(/\s+/g, '-'),
+  }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { town } = await params;
   const townData = gbData.find(
