@@ -93,22 +93,11 @@ export default function HomePage() {
                 Same-day delivery available across all major UK territories.
               </p>
 
-              {/* Enhanced Search */}
-              <div className="relative max-w-xl mx-auto group">
-                <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+             
                 </div>
-                <input 
-                  type="text"
-                  placeholder="Enter your town or city..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white border-2 border-gray-100 h-18 pl-16 pr-6 rounded-3xl text-lg font-semibold focus:outline-none focus:border-orange-500/30 focus:ring-4 focus:ring-orange-500/5 transition-all shadow-xl shadow-gray-100/50"
-                />
               </div>
-            </div>
-          </div>
-        </section>
+              </section>
+            
 
         {/* Value Props */}
         <section className="py-12 border-y border-gray-100">
@@ -136,6 +125,21 @@ export default function HomePage() {
         <section className="py-24 bg-gray-50/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+
+              {/* Enhanced Search */}
+              <div className="relative max-w-xl mx-auto group">
+                <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+                  <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                </div>
+                <input 
+                  type="text"
+                  placeholder="Enter your town or city..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white border-2 border-gray-100 h-18 pl-16 pr-6 rounded-3xl text-lg font-semibold focus:outline-none focus:border-orange-500/30 focus:ring-4 focus:ring-orange-500/5 transition-all shadow-xl shadow-gray-100/50"
+                />
+              </div>
+              
               <div>
                 <h2 className="text-4xl font-black text-gray-900 tracking-tighter uppercase italic">Local Supply</h2>
                 <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">Available Delivery Locations</p>
