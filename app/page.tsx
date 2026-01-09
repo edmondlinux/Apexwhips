@@ -1,137 +1,250 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Zap, MapPin } from 'lucide-react';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Zap, MapPin, Search, ChevronRight, Truck, ShieldCheck, Clock } from 'lucide-react';
 import Link from 'next/link';
 import townsData from '@/data/towns.json';
 
-const TOWNS_PER_PAGE = 10;
+const TOWNS_PER_PAGE = 12;
 
 export default function HomePage() {
   const [visibleTowns, setVisibleTowns] = useState(TOWNS_PER_PAGE);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredTowns = useMemo(() => {
+    return townsData.filter(town => 
+      town.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
 
   useEffect(() => {
     const handleScroll = () => {
       if (
-        window.innerHeight + document.documentElement.scrollTop + 100 >=
+        window.innerHeight + document.documentElement.scrollTop + 200 >=
         document.documentElement.offsetHeight
       ) {
-        if (visibleTowns < townsData.length && !loading) {
+        if (visibleTowns < filteredTowns.length && !loading) {
           setLoading(true);
           setTimeout(() => {
             setVisibleTowns(prev => prev + TOWNS_PER_PAGE);
             setLoading(false);
-          }, 500);
+          }, 400);
         }
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [visibleTowns, loading]);
+  }, [visibleTowns, loading, filteredTowns.length]);
 
-  const displayedTowns = townsData.slice(0, visibleTowns);
+  const displayedTowns = filteredTowns.slice(0, visibleTowns);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center">
-            <Zap className="h-6 w-6 text-orange-500" />
-            <span className="ml-2 text-xl font-bold text-gray-900 tracking-tight uppercase">ApexWhips</span>
+    <div className="flex flex-col min-h-screen bg-white selection:bg-orange-100 selection:text-orange-900">
+      {/* Premium Navigation */}
+      <header className="border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+          <div className="flex items-center group cursor-pointer">
+            <div className="bg-orange-500 p-2 rounded-xl group-hover:rotate-12 transition-transform duration-300">
+              <Zap className="h-6 w-6 text-white" />
+            </div>
+            <span className="ml-3 text-2xl font-black text-gray-900 tracking-tighter uppercase italic">ApexWhips</span>
           </div>
-          <nav className="hidden md:flex space-x-8 items-center">
-            <span className="text-sm font-bold text-orange-500 bg-orange-50 px-3 py-1 rounded-full uppercase tracking-wider">
-              SmartWhips £30 | Case £130
-            </span>
-          </nav>
+          
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex flex-col items-end">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Current Pricing</span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-black text-gray-900">£30 <span className="text-gray-400 font-medium">Single</span></span>
+                <div className="w-1 h-1 rounded-full bg-gray-200" />
+                <span className="text-sm font-black text-orange-500">£130 <span className="text-orange-400 font-medium italic">Case</span></span>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
       <main className="flex-grow">
-        <section className="py-20 bg-linear-to-b from-white to-gray-50 text-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight sm:text-6xl">
-              SmartWhips <span className="text-orange-500">Across UK</span>
-            </h1>
-            <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
-              Premium automotive smart tech. Delivered locally in every major town. 
-              Single canisters for £30, Cases for £130.
-            </p>
+        {/* Hero Section */}
+        <section className="relative pt-24 pb-20 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40">
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-200 blur-[120px] rounded-full" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-100 blur-[100px] rounded-full" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-8 shadow-2xl shadow-orange-200">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                </span>
+                UK-Wide Dispatch Active
+              </div>
+              <h1 className="text-6xl md:text-8xl font-black text-gray-900 tracking-tight leading-[0.9] mb-8">
+                PREMIUM <br />
+                <span className="text-orange-500 italic">SMARTWHIPS</span>
+              </h1>
+              <p className="text-xl text-gray-500 font-medium leading-relaxed mb-12">
+                The industry standard for automotive smart integration. 
+                Same-day delivery available across all major UK territories.
+              </p>
+
+              {/* Enhanced Search */}
+              <div className="relative max-w-xl mx-auto group">
+                <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+                  <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                </div>
+                <input 
+                  type="text"
+                  placeholder="Enter your town or city..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white border-2 border-gray-100 h-18 pl-16 pr-6 rounded-3xl text-lg font-semibold focus:outline-none focus:border-orange-500/30 focus:ring-4 focus:ring-orange-500/5 transition-all shadow-xl shadow-gray-100/50"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="py-12 bg-white">
+        {/* Value Props */}
+        <section className="py-12 border-y border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
-              <MapPin className="h-6 w-6 text-orange-500 mr-2" />
-              Select Your Town
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayedTowns.map((town) => (
-                <Card key={town.id} className="overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 rounded-2xl group border-b-4 border-b-orange-500">
-                  <div className="aspect-square relative overflow-hidden bg-gray-100">
-                    <img 
-                      src="/IMG_1867.jpeg" 
-                      alt={town.name}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full font-bold text-xs uppercase tracking-widest shadow-lg">
-                      Free Delivery
-                    </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+              {[
+                { icon: Truck, label: 'Fast Delivery', sub: 'Within 2 hours' },
+                { icon: ShieldCheck, label: 'Secure Pay', sub: 'Encrypted apps' },
+                { icon: Clock, label: '24/7 Support', sub: 'Live assistance' },
+                { icon: Zap, label: 'High Grade', sub: 'Medical quality' },
+              ].map((item, idx) => (
+                <div key={idx} className="flex flex-col items-center md:items-start text-center md:text-left gap-3 px-4">
+                  <item.icon className="h-6 w-6 text-orange-500" />
+                  <div>
+                    <div className="font-black text-sm uppercase tracking-tighter">{item.label}</div>
+                    <div className="text-xs text-gray-400 font-bold uppercase tracking-widest">{item.sub}</div>
                   </div>
-                  <CardHeader className="bg-white">
-                    <CardTitle className="text-2xl font-black italic uppercase tracking-tighter text-gray-900 flex justify-between items-center">
-                      {town.name}
-                      <Zap className="h-5 w-5 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-6">
-                    <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
-                      <span>SmartWhip Pro</span>
-                      <span className="text-orange-500 italic">£30 or £130 for a case</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Towns Grid */}
+        <section className="py-24 bg-gray-50/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+              <div>
+                <h2 className="text-4xl font-black text-gray-900 tracking-tighter uppercase italic">Local Supply</h2>
+                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">Available Delivery Locations</p>
+              </div>
+              <div className="text-right">
+                <span className="text-5xl font-black text-orange-500/10 tracking-tighter leading-none select-none">UK NETWORK</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {displayedTowns.map((town) => (
+                <Link href={`/towns/${town.id}`} key={town.id} className="group">
+                  <Card className="h-full overflow-hidden border-none shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 rounded-[2.5rem] bg-white relative">
+                    <div className="aspect-[4/5] relative overflow-hidden">
+                      <img 
+                        src="/IMG_1867.jpeg" 
+                        alt={town.name}
+                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-gray-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                      
+                      <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                        In Stock
+                      </div>
+
+                      <div className="absolute bottom-8 left-8 right-8 text-white">
+                        <div className="flex items-center gap-2 text-orange-400 mb-2">
+                          <MapPin className="h-4 w-4 fill-current" />
+                          <span className="text-[10px] font-black uppercase tracking-[0.3em]">United Kingdom</span>
+                        </div>
+                        <h3 className="text-3xl font-black italic uppercase tracking-tighter leading-none mb-4">{town.name}</h3>
+                      </div>
                     </div>
-                    <p className="text-gray-500 text-sm">
-                      Immediate delivery available in {town.name}. Professional local service.
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <Link href={`/towns/${town.id}`} className="w-full">
-                      <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-xl py-6 text-lg font-bold">
-                        View Deals in {town.name}
+
+                    <CardContent className="p-8">
+                      <div className="flex flex-col gap-1 mb-6">
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Single Unit</span>
+                          <span className="text-xl font-black text-gray-900">£30</span>
+                        </div>
+                        <div className="h-px bg-gray-100 my-2" />
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] font-black text-orange-400 uppercase tracking-widest">Case Pack</span>
+                          <span className="text-xl font-black text-orange-500">£130</span>
+                        </div>
+                      </div>
+                      <Button className="w-full bg-gray-900 hover:bg-orange-600 text-white rounded-2xl h-14 text-sm font-black uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
+                        Get Local Access
+                        <ChevronRight className="h-4 w-4" />
                       </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
 
             {loading && (
-              <div className="mt-12 text-center">
-                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-orange-500 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" />
-                <p className="mt-2 text-gray-500 font-medium">Loading more towns...</p>
+              <div className="mt-20 text-center">
+                <div className="inline-flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-orange-500 animate-bounce" />
+                  <div className="w-3 h-3 rounded-full bg-orange-500 animate-bounce [animation-delay:-.3s]" />
+                  <div className="w-3 h-3 rounded-full bg-orange-500 animate-bounce [animation-delay:-.5s]" />
+                </div>
               </div>
             )}
 
-            {!loading && visibleTowns >= townsData.length && (
-              <div className="mt-12 text-center text-gray-400 font-medium italic">
-                All major UK towns listed
+            {!loading && displayedTowns.length === 0 && (
+              <div className="mt-20 text-center py-20 bg-white rounded-[3rem] border-2 border-dashed border-gray-100">
+                <Search className="h-12 w-12 text-gray-200 mx-auto mb-4" />
+                <p className="text-xl font-black text-gray-900 uppercase italic">No locations found</p>
+                <p className="text-gray-400 font-medium mt-2">Try searching for a major UK city or town</p>
+                <Button 
+                  variant="link" 
+                  onClick={() => setSearchQuery('')}
+                  className="mt-4 text-orange-500 font-bold"
+                >
+                  Clear search
+                </Button>
               </div>
             )}
           </div>
         </section>
       </main>
 
-      <footer className="bg-white border-t border-gray-200 py-12 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center items-center mb-4">
-            <Zap className="h-5 w-5 text-orange-500" />
-            <span className="ml-2 text-lg font-bold text-gray-900 uppercase tracking-tighter">ApexWhips</span>
+      <footer className="bg-gray-900 py-24 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="flex items-center group mb-8">
+                <div className="bg-orange-500 p-2 rounded-xl">
+                  <Zap className="h-6 w-6 text-white" />
+                </div>
+                <span className="ml-3 text-2xl font-black tracking-tighter uppercase italic">ApexWhips</span>
+              </div>
+              <p className="text-gray-400 font-medium max-w-sm">
+                Leading the market in high-performance automotive smart tech. 
+                Quality, speed, and discretion guaranteed.
+              </p>
+            </div>
+            <div className="flex flex-col md:items-end gap-4 text-gray-400 text-xs font-bold uppercase tracking-[0.3em]">
+              <p>© 2026 APEXWHIPS INTERNATIONAL</p>
+              <div className="flex gap-6">
+                <span className="hover:text-white cursor-pointer transition-colors">Terms</span>
+                <span className="hover:text-white cursor-pointer transition-colors">Privacy</span>
+                <span className="hover:text-white cursor-pointer transition-colors">Support</span>
+              </div>
+            </div>
           </div>
-          <p className="text-gray-500">© 2026 ApexWhips.com. Premier UK SmartWhip Supplier.</p>
         </div>
       </footer>
     </div>
