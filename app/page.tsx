@@ -13,6 +13,7 @@ export default function HomePage() {
   const [visibleTowns, setVisibleTowns] = useState(TOWNS_PER_PAGE);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   const towns = useMemo(() => {
     return gbData.map(t => ({
@@ -26,6 +27,13 @@ export default function HomePage() {
     return towns.filter(town => 
       town.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+  }, [searchQuery, towns]);
+
+  const recommendations = useMemo(() => {
+    if (!searchQuery) return [];
+    return towns
+      .filter(town => town.name.toLowerCase().startsWith(searchQuery.toLowerCase()))
+      .slice(0, 5);
   }, [searchQuery, towns]);
 
   useEffect(() => {
@@ -62,6 +70,7 @@ export default function HomePage() {
           </div>
           
           <div className="hidden md:flex items-center gap-6">
+            <Link href="/shop" className="text-sm font-bold text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-widest">Shop All</Link>
             <div className="flex flex-col items-end">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Current Pricing</span>
               <div className="flex items-center gap-3">
@@ -107,9 +116,32 @@ export default function HomePage() {
                   type="text"
                   placeholder="Enter your town or city..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setShowRecommendations(true);
+                  }}
+                  onBlur={() => setTimeout(() => setShowRecommendations(false), 200)}
+                  onFocus={() => setShowRecommendations(true)}
                   className="w-full bg-white border-2 border-gray-100 h-18 pl-16 pr-6 rounded-3xl text-lg font-semibold focus:outline-none focus:border-orange-500/30 focus:ring-4 focus:ring-orange-500/5 transition-all shadow-xl shadow-gray-100/50"
                 />
+                
+                {showRecommendations && recommendations.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
+                    {recommendations.map((rec) => (
+                      <Link 
+                        key={rec.id}
+                        href={`/towns/${rec.id}`}
+                        className="flex items-center gap-3 px-6 py-4 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0"
+                      >
+                        <MapPin className="h-4 w-4 text-orange-500" />
+                        <div>
+                          <div className="font-bold text-gray-900">{rec.name}</div>
+                          <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{rec.admin}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
