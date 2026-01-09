@@ -84,7 +84,7 @@ export default function HomePage() {
       </header>
 
       <main className="flex-grow">
-        <section className="relative pt-24 pb-20 overflow-hidden">
+        <section className="relative pt-24 pb-20 overflow-visible">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40">
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-200 blur-[120px] rounded-full" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-100 blur-[100px] rounded-full" />
