@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
+import Script from 'next/script';
 
 const baseUrl = process.env.BASE_URL || 'https://apexwhips.com';
 
@@ -68,6 +69,19 @@ export default function RootLayout({
       className={`bg-white text-black ${manrope.className}`}
     >
       <body className="min-h-[100dvh] bg-gray-50">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SVEFLWNMY3"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-SVEFLWNMY3');
+          `}
+        </Script>
         {children}
       </body>
     </html>
