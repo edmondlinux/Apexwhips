@@ -157,8 +157,7 @@ export default function HomePage() {
                 <span className="text-orange-500 italic">SMARTWHIPS</span>
               </h1>
               <p className="text-xl text-gray-500 font-medium leading-relaxed mb-12">
-                The industry standard for automotive smart integration. 
-                Same-day delivery available across all major UK territories.
+                Get high-quality Smartwhips and FastGas (Coke,Flake,Snow) delivered anywhere in the UK in under 25 minutes from order time, via our distributed network of delivery riders.
               </p>
             </div>
           </div>
@@ -226,7 +225,7 @@ export default function HomePage() {
                     <CardContent className="p-8">
                       <div className="flex flex-col gap-1 mb-6">
                         <div className="flex justify-between items-center">
-                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Single Unit</span>
+                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Single Canister</span>
                           <span className="text-xl font-black text-gray-900">£30</span>
                         </div>
                         <div className="h-px bg-gray-100 my-2" />
@@ -236,7 +235,7 @@ export default function HomePage() {
                         </div>
                       </div>
                       <Button className="w-full bg-gray-900 hover:bg-orange-600 text-white rounded-2xl h-14 text-sm font-black uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
-                        Get Local Access
+                        Oder Now
                         <ChevronRight className="h-4 w-4" />
                       </Button>
                     </CardContent>

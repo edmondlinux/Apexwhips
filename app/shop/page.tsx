@@ -109,7 +109,7 @@ export default function ShopPage() {
                     <CardContent className="p-8">
                       <div className="flex flex-col gap-1 mb-6">
                         <div className="flex justify-between items-center">
-                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Single Unit</span>
+                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Single Canister</span>
                           <span className="text-xl font-black text-gray-900">£30</span>
                         </div>
                         <div className="h-px bg-gray-100 my-2" />

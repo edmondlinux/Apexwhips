@@ -79,9 +79,9 @@ export default async function TownPage({ params }: Props) {
   const products = [
     {
       id: 'single',
-      name: 'SmartWhip Pro',
-      subtitle: 'Single Unit',
-      description: `Medical-grade high-performance smart canister for individual vehicle integration in ${townData.city}.`,
+      name: 'SmartWhip',
+      subtitle: 'Single CannisterC',
+      description: `Medical-grade high-performance smart canister for individual in ${townData.city}.`,
       price: '£30',
       tag: 'Best Seller'
     },
@@ -89,7 +89,7 @@ export default async function TownPage({ params }: Props) {
       id: 'case',
       name: 'SmartWhip Case',
       subtitle: '6-Unit Bulk Pack',
-      description: `Professional bulk case. Engineered for high-volume automotive environments across ${townData.admin_name}.`,
+      description: `Professional bulk case. Perfect for your parties across ${townData.admin_name}.`,
       price: '£130',
       tag: 'Best Value'
     }
@@ -128,8 +128,8 @@ export default async function TownPage({ params }: Props) {
               <span className="text-orange-500 italic">{townData.city.toUpperCase()}</span>
             </h1>
             <p className="text-xl text-gray-500 font-medium leading-relaxed">
-              Premium smart automotive technology available for immediate dispatch across {townData.city} ({townData.admin_name}). 
-              With a local population of {Number(townData.population).toLocaleString()}, we maintain high stock levels for rapid fulfillment.
+              Premium Smartwhips,Crake,Flake available for immediate delivery across {townData.city} ({townData.admin_name}). 
+              With a local population of {Number(townData.population).toLocaleString()}, we maintain high stock levels for rapid drops.
             </p>
           </div>
         </div>
@@ -172,7 +172,7 @@ export default async function TownPage({ params }: Props) {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <a 
-                      href="https://wa.me/yournumber" 
+                      href={process.env.NEXT_PUBLIC_WHATSAPP_URL || "#"}
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#128C7E] text-white py-6 rounded-2xl text-sm font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-green-100"
@@ -180,12 +180,12 @@ export default async function TownPage({ params }: Props) {
                       <MessageCircle className="h-5 w-5" />
                       WhatsApp
                     </a>
-                    <a 
-                      href="https://t.me/yourusername" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-3 bg-[#0088cc] hover:bg-[#0077b5] text-white py-6 rounded-2xl text-sm font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-100"
-                    >
+                      <a
+                        href={process.env.NEXT_PUBLIC_TELEGRAM_URL || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-3 bg-[#0088cc] hover:bg-[#0077b5] text-white py-6 rounded-2xl text-sm font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-100"
+                      >
                       <Send className="h-5 w-5" />
                       Telegram
                     </a>
@@ -205,13 +205,13 @@ export default async function TownPage({ params }: Props) {
               </h2>
               <div className="space-y-4 text-gray-600 font-medium leading-relaxed">
                 <p>
-                  ApexWhips is proud to be the leading supplier of premium automotive smart technology in the {townData.admin_name} region. 
+                  ApexWhips is proud to be the leading supplier of premium  smartwhips in the {townData.admin_name} region. 
                   Our strategic location at {townData.lat}, {townData.lng} allows us to reach any part of {townData.city} within minutes of dispatch.
                 </p>
                 <p>
                   Whether you are in the heart of {townData.city} or the surrounding areas, our dedicated local team ensures 
-                  that your SmartWhip Pro or Case arrives securely and discreetly. We understand the specific needs of the 
-                  {townData.city} automotive community and tailor our local stock to match.
+                  that your SmartWhip or Case arrives securely and discreetly. We understand the specific needs of the 
+                  {townData.city}  community and tailor our local stock to match.
                 </p>
               </div>
             </div>
