@@ -25,9 +25,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!townData) return { title: 'Town Not Found' };
 
   const cityName = townData.city;
+  const baseUrl = process.env.BASE_URL || 'https://apexwhips.com';
+  
   return {
     title: `Smartwhip in ${cityName} | Buy Smartwhip ${cityName} - ApexWhips`,
     description: `Get Smartwhip in ${cityName}. Fast delivery of Smartwhips, Flake, and Fastgas in ${cityName}. Buy Smartwhip for sale in ${cityName} today with rapid dispatch.`,
+    alternates: {
+      canonical: `/towns/${town}`,
+    },
     keywords: [
       `Smartwhip in ${cityName}`,
       `ballon in ${cityName}`,
@@ -52,6 +57,25 @@ export default async function TownPage({ params }: Props) {
     notFound();
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: `ApexWhips ${townData.city}`,
+    description: `Premium automotive SmartWhip delivery in ${townData.city}`,
+    url: `${process.env.BASE_URL || 'https://apexwhips.com'}/towns/${town}`,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: townData.city,
+      addressRegion: townData.admin_name,
+      addressCountry: 'GB',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: townData.lat,
+      longitude: townData.lng,
+    },
+  };
+
   const products = [
     {
       id: 'single',
@@ -73,6 +97,10 @@ export default async function TownPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white selection:bg-orange-100 selection:text-orange-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
           <Link href="/" className="flex items-center group">

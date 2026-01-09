@@ -1,0 +1,42 @@
+HIGH
+
+To address URL canonicalization issues, it is recommended to select a primary URL for your webpage and set up redirects from all other variations to the preferred one.
+HIGH
+
+To improve the website experience for your visitors, it is recommended to eliminate any render-blocking resources on this webpage.
+HIGH
+
+Using images in a modern format can significantly reduce the file size and improve the loading speed of a webpage, providing a better user experience and potentially increasing engagement.
+MEDIUM
+
+Serving resources (images, JS, CSS) from a CDN service, could improve website loading times, reduce bandwidth costs and increase content availability and redundancy.
+MEDIUM
+
+Avoid using distorted images, as they can have a negative impact on the user experience.
+MEDIUM
+
+Serve properly sized images to reduce page loading times and to improve user's experience.
+MEDIUM
+
+Consider using structured data in your webpage as it can help search engines gain a better understanding of your content.
+MEDIUM
+
+To provide a good user experience, Google recommends that sites should aim for a First Contentful Paint value of 1.8 seconds or less.
+MEDIUM
+
+Add a Google Analytics script to this website to help in diagnosing potential SEO issues by monitoring site visitors and traffic sources.
+MEDIUM
+
+HTTP/2 protocol offers several key improvements, including faster page load times, improved performance, better security and more efficient use of network resources.
+LOW
+
+Keep in mind that the NOINDEX meta tag instructs search engines not to index a webpage. Please verify if this is the intended behavior, as the webpage will not appear in search engine results.
+LOW
+
+Without an SPF record, spammers can easily spoof emails from this domain, potentially leading to compromised email security and deliverability issues.
+LOW
+
+Consider adding the Strict-Transport-Security header to your webpage to ensure that web traffic is encrypted over HTTPS, mitigating the risk of man-in-the-middle attacks and other security threats.
+LOW
+
+Using more than 20 HTTP requests on a webpage can negatively impact the loading time.
