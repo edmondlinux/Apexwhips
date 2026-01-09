@@ -71,8 +71,8 @@ export default function HomePage() {
             <span className="ml-3 text-2xl font-black text-gray-900 tracking-tighter uppercase italic">ApexWhips</span>
           </div>
           
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/shop" className="text-sm font-bold text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-widest">Shop All</Link>
+          <div className="flex items-center gap-4 sm:gap-6">
+            <Link href="/shop" className="hidden sm:block text-sm font-bold text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-widest">Shop All</Link>
             
             <div className="relative flex items-center">
               <button 
@@ -124,7 +124,7 @@ export default function HomePage() {
               )}
             </div>
 
-            <div className="flex flex-col items-end">
+            <div className="hidden sm:flex flex-col items-end">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Current Pricing</span>
               <div className="flex items-center gap-3">
                 <span className="text-sm font-black text-gray-900">£30 <span className="text-gray-400 font-medium">Single</span></span>
