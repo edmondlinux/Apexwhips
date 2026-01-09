@@ -126,7 +126,7 @@ export default function HomePage() {
                 />
                 
                 {showRecommendations && recommendations.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-y-auto max-h-96 z-[60]">
                     {recommendations.map((rec) => (
                       <Link 
                         key={rec.id}
