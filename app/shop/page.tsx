@@ -3,7 +3,8 @@
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Zap, MapPin, ChevronRight, Truck, ShieldCheck, Clock, ArrowLeft, ChevronLeft } from 'lucide-react';
+import { Zap, MapPin, ChevronRight, Truck, ShieldCheck, Clock, ArrowLeft, ChevronLeft, Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import gbData from '@/data/gb.json';
 
@@ -11,17 +12,30 @@ const TOWNS_PER_PAGE = 24;
 
 export default function ShopPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const towns = useMemo(() => {
-    return gbData.map(t => ({
+    const allTowns = gbData.map(t => ({
       id: t.city.toLowerCase().replace(/\s+/g, '-'),
       name: t.city,
       admin: t.admin_name
     }));
-  }, []);
+
+    if (!searchQuery) return allTowns;
+
+    return allTowns.filter(t => 
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      t.admin.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
 
   const totalPages = Math.ceil(towns.length / TOWNS_PER_PAGE);
   const displayedTowns = towns.slice((currentPage - 1) * TOWNS_PER_PAGE, currentPage * TOWNS_PER_PAGE);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-white selection:bg-orange-100 selection:text-orange-900">
@@ -44,9 +58,22 @@ export default function ShopPage() {
         <section className="py-16 bg-gray-50/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-              <div>
+              <div className="flex-1">
                 <h1 className="text-5xl font-black text-gray-900 tracking-tighter uppercase italic">All Locations</h1>
                 <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">Browse products across the UK</p>
+                
+                <div className="mt-8 max-w-md relative group">
+                  <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+                    <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                  </div>
+                  <Input 
+                    type="text" 
+                    placeholder="Search by city or region..." 
+                    className="w-full pl-14 h-14 bg-white border-2 border-gray-100 rounded-2xl font-bold text-gray-900 focus:border-orange-500 focus:ring-orange-500/20 transition-all placeholder:text-gray-400 placeholder:font-bold placeholder:uppercase placeholder:tracking-widest placeholder:text-[10px]"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                  />
+                </div>
               </div>
               <div className="text-right hidden md:block">
                 <span className="text-5xl font-black text-orange-500/10 tracking-tighter leading-none select-none">SHOP ALL</span>
