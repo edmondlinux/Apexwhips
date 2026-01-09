@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Zap, MapPin, Search, ChevronRight, Truck, ShieldCheck, Clock } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import gbData from '@/data/gb.json';
 
 const TOWNS_PER_PAGE = 12;
@@ -153,6 +154,15 @@ export default function HomePage() {
                 UK-Wide Dispatch Active
               </div>
               <h1 className="text-6xl md:text-8xl font-black text-gray-900 tracking-tight leading-[0.9] mb-8">
+                <div className="flex justify-center mb-8">
+                  <Image 
+                    src="/logo/logo.jpeg" 
+                    alt="ApexWhips Logo" 
+                    width={200} 
+                    height={200} 
+                    className="rounded-3xl shadow-2xl"
+                  />
+                </div>
                 PREMIUM <br />
                 <span className="text-orange-500 italic">SMARTWHIPS</span>
               </h1>
@@ -201,10 +211,11 @@ export default function HomePage() {
                 <Link href={`/towns/${town.id}`} key={town.id} className="group">
                   <Card className="h-full overflow-hidden border-none shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 rounded-[2.5rem] bg-white relative">
                     <div className="aspect-[4/5] relative overflow-hidden">
-                      <img 
+                      <Image 
                         src="/IMG_1867.jpeg" 
                         alt={town.name}
-                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       <div className="absolute inset-0 bg-linear-to-t from-gray-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                       

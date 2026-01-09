@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Zap, MapPin, ChevronRight, Truck, ShieldCheck, Clock, ArrowLeft, ChevronLeft, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import Image from 'next/image';
 import gbData from '@/data/gb.json';
 
 const TOWNS_PER_PAGE = 24;
@@ -85,10 +86,11 @@ export default function ShopPage() {
                 <Link href={`/towns/${town.id}`} key={town.id} className="group">
                   <Card className="h-full overflow-hidden border-none shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 rounded-[2.5rem] bg-white relative">
                     <div className="aspect-[4/5] relative overflow-hidden">
-                      <img 
+                      <Image 
                         src="/IMG_1867.jpeg" 
                         alt={town.name}
-                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       <div className="absolute inset-0 bg-linear-to-t from-gray-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                       

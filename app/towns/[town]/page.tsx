@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Zap, MapPin, MessageCircle, Send, ArrowLeft, ShieldCheck, Truck, Clock } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import gbData from '@/data/gb.json';
 
 interface Props {
@@ -124,6 +125,15 @@ export default async function TownPage({ params }: Props) {
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-orange-100 blur-[100px] rounded-full -z-10 opacity-50" />
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-[0.9] mb-6">
+              <div className="mb-8">
+                <Image 
+                  src="/logo/logo.jpeg" 
+                  alt="ApexWhips Logo" 
+                  width={120} 
+                  height={120} 
+                  className="rounded-2xl shadow-xl"
+                />
+              </div>
               SMARTWHIP IN <br />
               <span className="text-orange-500 italic">{townData.city.toUpperCase()}</span>
             </h1>
@@ -138,10 +148,11 @@ export default async function TownPage({ params }: Props) {
           {products.map((product) => (
             <Card key={product.id} className="overflow-hidden border-none shadow-2xl shadow-gray-200/50 bg-white rounded-[3rem] group">
               <div className="relative aspect-[16/10] overflow-hidden">
-                <img 
+                <Image 
                   src="/IMG_1867.jpeg" 
                   alt={product.name}
-                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900/60 to-transparent" />
                 <div className="absolute top-8 left-8">

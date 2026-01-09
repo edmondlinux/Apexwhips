@@ -12,6 +12,19 @@ export const metadata: Metadata = {
   title: 'ApexWhips - SmartWhips across the UK | Fast Delivery',
   description: 'Premium automotive SmartWhips available for delivery across all major UK towns. Buy SmartWhips, Fastgas, and Flake with rapid local dispatch.',
   keywords: ['Smartwhip', 'Fastgas', 'Flake', 'Smartwhips for sale', 'Buy Smartwhip', 'UK Delivery'],
+  icons: {
+    icon: [
+      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon/favicon.ico' }
+    ],
+    apple: [
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    other: [
+      { rel: 'manifest', url: '/favicon/site.webmanifest' }
+    ]
+  },
   robots: {
     index: true,
     follow: true,
@@ -21,11 +34,20 @@ export const metadata: Metadata = {
     description: 'Rapid delivery of premium automotive smart technology across the UK.',
     type: 'website',
     url: baseUrl,
+    images: [
+      {
+        url: '/IMG_1867.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'ApexWhips Premium Product',
+      }
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ApexWhips - Premium SmartWhips UK',
     description: 'Rapid delivery of premium automotive smart technology across the UK.',
+    images: ['/IMG_1867.jpeg'],
   }
 };
 
