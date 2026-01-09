@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Zap, MapPin, MessageCircle, Send, ArrowLeft, ShieldCheck, Truck, Clock } from 'lucide-react';
 import Link from 'next/link';
-import towns from '@/data/towns.json';
+import gbData from '@/data/gb.json';
 
 interface Props {
   params: Promise<{ town: string }>;
@@ -11,7 +11,10 @@ interface Props {
 
 export default async function TownPage({ params }: Props) {
   const { town } = await params;
-  const townData = towns.find((t) => t.id.toLowerCase() === town.toLowerCase());
+  
+  const townData = gbData.find(
+    (t) => t.city.toLowerCase().replace(/\s+/g, '-') === town.toLowerCase()
+  );
 
   if (!townData) {
     notFound();
@@ -22,7 +25,7 @@ export default async function TownPage({ params }: Props) {
       id: 'single',
       name: 'SmartWhip Pro',
       subtitle: 'Single Unit',
-      description: 'Medical-grade high-performance smart canister for individual vehicle integration.',
+      description: `Medical-grade high-performance smart canister for individual vehicle integration in ${townData.city}.`,
       price: '£30',
       tag: 'Best Seller'
     },
@@ -30,7 +33,7 @@ export default async function TownPage({ params }: Props) {
       id: 'case',
       name: 'SmartWhip Case',
       subtitle: '6-Unit Bulk Pack',
-      description: 'Professional bulk case. Engineered for high-volume automotive environments.',
+      description: `Professional bulk case. Engineered for high-volume automotive environments across ${townData.admin_name}.`,
       price: '£130',
       tag: 'Best Value'
     }
@@ -38,7 +41,6 @@ export default async function TownPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white selection:bg-orange-100 selection:text-orange-900">
-      {/* Premium Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
           <Link href="/" className="flex items-center group">
@@ -52,28 +54,26 @@ export default async function TownPage({ params }: Props) {
           </Link>
           <div className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-2xl shadow-xl shadow-gray-200">
             <MapPin className="h-4 w-4 text-orange-500" />
-            <span className="text-xs font-black uppercase tracking-widest">{townData.name}</span>
+            <span className="text-xs font-black uppercase tracking-widest">{townData.city}</span>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Hero Section */}
         <div className="relative mb-20">
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-orange-100 blur-[100px] rounded-full -z-10 opacity-50" />
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-[0.9] mb-6">
               ORDER IN <br />
-              <span className="text-orange-500 italic">{townData.name.toUpperCase()}</span>
+              <span className="text-orange-500 italic">{townData.city.toUpperCase()}</span>
             </h1>
             <p className="text-xl text-gray-500 font-medium leading-relaxed">
-              Premium smart automotive technology available for immediate dispatch across {townData.name}. 
-              Select your package below and connect with our local dispatch team.
+              Premium smart automotive technology available for immediate dispatch across {townData.city} ({townData.admin_name}). 
+              With a local population of {Number(townData.population).toLocaleString()}, we maintain high stock levels for rapid fulfillment.
             </p>
           </div>
         </div>
 
-        {/* Product Selection */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           {products.map((product) => (
             <Card key={product.id} className="overflow-hidden border-none shadow-2xl shadow-gray-200/50 bg-white rounded-[3rem] group">
@@ -136,10 +136,49 @@ export default async function TownPage({ params }: Props) {
           ))}
         </div>
 
-        {/* Local Service Proof */}
+        {/* SEO Dynamic Content Section */}
+        <section className="bg-gray-50 rounded-[3rem] p-12 md:p-20 mb-20 border border-gray-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase italic mb-6">
+                Serving {townData.city} & {townData.admin_name}
+              </h2>
+              <div className="space-y-4 text-gray-600 font-medium leading-relaxed">
+                <p>
+                  ApexWhips is proud to be the leading supplier of premium automotive smart technology in the {townData.admin_name} region. 
+                  Our strategic location at {townData.lat}, {townData.lng} allows us to reach any part of {townData.city} within minutes of dispatch.
+                </p>
+                <p>
+                  Whether you are in the heart of {townData.city} or the surrounding areas, our dedicated local team ensures 
+                  that your SmartWhip Pro or Case arrives securely and discreetly. We understand the specific needs of the 
+                  {townData.city} automotive community and tailor our local stock to match.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div className="text-3xl font-black text-orange-500 mb-1 leading-none">{Number(townData.population).toLocaleString()}</div>
+                <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Local Population</div>
+              </div>
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div className="text-3xl font-black text-gray-900 mb-1 leading-none">24/7</div>
+                <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Support Hours</div>
+              </div>
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div className="text-3xl font-black text-gray-900 mb-1 leading-none">UK</div>
+                <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">ISO {townData.iso2} Standard</div>
+              </div>
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div className="text-3xl font-black text-orange-500 mb-1 leading-none">PRO</div>
+                <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Verified Tech</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {[
-            { icon: Truck, title: "Local Delivery", text: `Same-day dispatch across all ${townData.name} postcodes.` },
+            { icon: Truck, title: "Local Delivery", text: `Same-day dispatch across all ${townData.city} postcodes.` },
             { icon: ShieldCheck, title: "Certified Grade", text: "Highest medical-grade canisters for automotive use." },
             { icon: Clock, title: "Live Support", text: "Direct messaging with our dispatch team 24/7." }
           ].map((item, i) => (
@@ -151,12 +190,11 @@ export default async function TownPage({ params }: Props) {
           ))}
         </div>
 
-        {/* Bottom Banner */}
         <div className="bg-gray-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500 blur-[150px] rounded-full opacity-20 -mr-48 -mt-48" />
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase italic mb-6">Ready to upgrade?</h2>
           <p className="text-gray-400 font-medium max-w-xl mx-auto mb-10">
-            Our {townData.name} team is standing by. All orders are handled with total discretion and speed.
+            Our {townData.city} team is standing by. All orders are handled with total discretion and speed.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white rounded-2xl px-12 h-16 text-sm font-black uppercase tracking-widest transition-all">
@@ -166,14 +204,13 @@ export default async function TownPage({ params }: Props) {
         </div>
       </main>
 
-      {/* Minimal Footer */}
       <footer className="bg-white border-t border-gray-100 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center">
             <Zap className="h-5 w-5 text-orange-500" />
             <span className="ml-2 text-sm font-black text-gray-900 uppercase tracking-tighter italic">ApexWhips</span>
           </div>
-          <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.4em]">© 2026 APEXWHIPS {townData.name.toUpperCase()} HUB</p>
+          <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.4em]">© 2026 APEXWHIPS {townData.city.toUpperCase()} HUB</p>
         </div>
       </footer>
     </div>
