@@ -15,8 +15,8 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showRecommendations, setShowRecommendations] = useState(false);
-
   const [showNavSearch, setShowNavSearch] = useState(false);
+  const [scrollRotation, setScrollRotation] = useState(0);
 
   const towns = useMemo(() => {
     return gbData.map(t => ({
@@ -41,6 +41,10 @@ export default function HomePage() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Rotation logic
+      const rotation = (window.scrollY / 5) % 360;
+      setScrollRotation(rotation);
+
       if (
         window.innerHeight + document.documentElement.scrollTop + 200 >=
         document.documentElement.offsetHeight
@@ -55,7 +59,7 @@ export default function HomePage() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [visibleTowns, loading, filteredTowns.length]);
 
@@ -155,13 +159,21 @@ export default function HomePage() {
               </div>
               <h1 className="text-6xl md:text-8xl font-black text-gray-900 tracking-tight leading-[0.9] mb-8">
                 <div className="flex justify-center mb-8">
-                  <Image 
-                    src="/logo/logo.jpeg" 
-                    alt="ApexWhips Logo" 
-                    width={200} 
-                    height={200} 
-                    className="rounded-3xl shadow-2xl"
-                  />
+                  <div 
+                    style={{ 
+                      transform: `rotateY(${scrollRotation}deg) rotateX(${scrollRotation / 2}deg)`,
+                      transition: 'transform 0.1s ease-out'
+                    }}
+                  >
+                    <Image 
+                      src="/logo/logo.jpeg" 
+                      alt="ApexWhips Logo" 
+                      width={200} 
+                      height={200} 
+                      className="rounded-3xl shadow-2xl"
+                      priority
+                    />
+                  </div>
                 </div>
                 PREMIUM <br />
                 <span className="text-orange-500 italic">SMARTWHIPS</span>
