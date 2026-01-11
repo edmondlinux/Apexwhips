@@ -1,4 +1,5 @@
 import { FloatingActionButtons } from '@/components/FloatingActionButtons';
+import { BottomSheet } from '@/components/BottomSheet';
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
@@ -85,6 +86,7 @@ export default function RootLayout({
         </Script>
         {children}
         <FloatingActionButtons />
+        <BottomSheet />
       </body>
     </html>
   );
