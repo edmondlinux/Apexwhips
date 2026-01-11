@@ -15,7 +15,7 @@ export function BottomSheet() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 2500) {
         if (!hasScrolled) {
           setIsOpen(true);
           setHasScrolled(true);
