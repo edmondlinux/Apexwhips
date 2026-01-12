@@ -29,20 +29,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const baseUrl = process.env.BASE_URL || 'https://apexwhips.com';
   
   return {
-    title: `SmartWhip ${cityName} | Buy 640g Cream Chargers in ${cityName} | Fast Delivery`,
-    description: `Order SmartWhip, FastGas, and Cream Deluxe in ${cityName}. Rapid 25-minute delivery for 640g N2O cylinders and wholesale cases in ${cityName}. Best local prices.`,
+    title: `Buy SmartWhip ${cityName} | Fast 640g Cream Charger Delivery in ${cityName}`,
+    description: `Order genuine SmartWhip 640g cylinders in ${cityName}. Rapid 25-min delivery across ${cityName} for cream chargers, FastGas & Cream Deluxe. Best UK prices guaranteed.`,
     alternates: {
       canonical: `/towns/${town}`,
     },
     keywords: [
       `SmartWhip ${cityName}`,
       `buy SmartWhip ${cityName}`,
+      `SmartWhip delivery ${cityName}`,
+      `640g cream chargers ${cityName}`,
       `FastGas ${cityName}`,
       `Cream Deluxe ${cityName}`,
-      `cream chargers ${cityName}`,
-      `N2O delivery ${cityName}`,
-      `SmartWhip for sale ${cityName}`,
-      `wholesale SmartWhip ${cityName}`
+      `N2O cylinders ${cityName}`,
+      `SmartWhip wholesale ${cityName}`
     ],
     openGraph: {
       title: `Smartwhip in ${cityName} | ApexWhips`,
@@ -69,47 +69,64 @@ export default async function TownPage({ params }: Props) {
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: `ApexWhips ${townData.city}`,
-    description: `Premium SmartWhip, FastGas, and Cream Deluxe delivery in ${townData.city}. 640g N2O cream chargers with rapid local dispatch.`,
-    url: `${process.env.BASE_URL || 'https://apexwhips.com'}/towns/${town}`,
-    telephone: "07871343140",
-    priceRange: "££",
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: townData.city,
-      addressRegion: townData.admin_name,
-      addressCountry: 'GB',
+    '@type': 'Product',
+    'name': `SmartWhip 640g Cylinder - ${townData.city} Delivery`,
+    'description': `Premium 640g SmartWhip nitrous oxide cream charger cylinder. Food-grade N2O for professional catering and automotive use in ${townData.city}.`,
+    'image': `${process.env.BASE_URL || 'https://apexwhips.com'}/og_image/og_image.jpeg`,
+    'brand': {
+      '@type': 'Brand',
+      'name': 'SmartWhip'
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: townData.lat,
-      longitude: townData.lng,
-    },
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-      ],
-      "opens": "00:00",
-      "closes": "23:59"
+    'offers': {
+      '@type': 'Offer',
+      'url': `${process.env.BASE_URL || 'https://apexwhips.com'}/towns/${town}`,
+      'priceCurrency': 'GBP',
+      'price': '30.00',
+      'availability': 'https://schema.org/InStock',
+      'areaServed': {
+        '@type': 'City',
+        'name': townData.city
+      }
     }
+  };
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': [
+      {
+        '@type': 'Question',
+        'name': `How fast is SmartWhip delivery in ${townData.city}?`,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': `We offer rapid local dispatch in ${townData.city}, with most orders delivered within 25-45 minutes.`
+        }
+      },
+      {
+        '@type': 'Question',
+        'name': `Is the SmartWhip food-grade?`,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': "Yes, all our SmartWhip canisters contain 99.9% pure food-grade Nitrous Oxide (N2O)."
+        }
+      }
+    ]
   };
 
   const products = [
     {
       id: 'single',
-      name: 'SmartWhip',
-      subtitle: 'Single CannisterC',
-      description: `Medical-grade high-performance smart canister for individual in ${townData.city}.`,
+      name: 'SmartWhip 640g',
+      subtitle: 'Premium N2O Cylinder',
+      description: `The industry-leading 640g SmartWhip cylinder. Provides consistent pressure and high-purity N2O for professional results in ${townData.city}.`,
       price: '£30',
       tag: 'Best Seller'
     },
     {
       id: 'case',
-      name: 'SmartWhip Case',
-      subtitle: '6-Unit Bulk Pack',
-      description: `Professional bulk case. Perfect for your parties across ${townData.admin_name}.`,
+      name: 'SmartWhip Case (6x)',
+      subtitle: 'Wholesale Bulk Pack',
+      description: `Stock up with our 6-unit master case. The most cost-effective way to buy SmartWhip in ${townData.admin_name} for large events or business use.`,
       price: '£130',
       tag: 'Best Value'
     }
@@ -120,6 +137,10 @@ export default async function TownPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
@@ -268,9 +289,9 @@ export default async function TownPage({ params }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {[
-            { icon: Truck, title: "Local Delivery", text: `Same-day dispatch across all ${townData.city} postcodes.` },
-            { icon: ShieldCheck, title: "Certified Grade", text: "Highest medical-grade canisters for automotive use." },
-            { icon: Clock, title: "Live Support", text: "Direct messaging with our dispatch team 24/7." }
+            { icon: Truck, title: "Rapid Dispatch", text: `Get your SmartWhip delivered in ${townData.city} within 25-45 minutes. Our local courier network ensures the fastest arrival.` },
+            { icon: ShieldCheck, title: "Premium Quality", text: "We only stock 100% genuine SmartWhip cylinders containing high-purity, food-grade Nitrous Oxide." },
+            { icon: Clock, title: "24/7 Availability", text: `Need cream chargers late at night? Our ${townData.city} hub operates 24/7 to fulfill your orders anytime.` }
           ].map((item, i) => (
             <div key={i} className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
               <item.icon className="h-8 w-8 text-orange-500 mb-6" />
@@ -279,6 +300,29 @@ export default async function TownPage({ params }: Props) {
             </div>
           ))}
         </div>
+
+        {/* FAQ Section */}
+        <section className="mb-20">
+          <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase italic mb-8">Frequently Asked Questions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-[2rem] border border-gray-100">
+              <h3 className="font-black uppercase tracking-tight text-gray-900 mb-4 text-lg">How do I order SmartWhip in {townData.city}?</h3>
+              <p className="text-gray-500 font-medium">Ordering is simple. Click the WhatsApp or Telegram buttons to connect directly with our dispatch team. Provide your location in {townData.city} and we will handle the rest.</p>
+            </div>
+            <div className="bg-white p-8 rounded-[2rem] border border-gray-100">
+              <h3 className="font-black uppercase tracking-tight text-gray-900 mb-4 text-lg">What brands do you stock?</h3>
+              <p className="text-gray-500 font-medium">While SmartWhip is our most popular brand, we also stock FastGas, Cream Deluxe, and GoldWhip 640g cylinders for delivery across {townData.admin_name}.</p>
+            </div>
+            <div className="bg-white p-8 rounded-[2rem] border border-gray-100">
+              <h3 className="font-black uppercase tracking-tight text-gray-900 mb-4 text-lg">Are there any delivery charges?</h3>
+              <p className="text-gray-500 font-medium">We offer competitive local delivery rates in {townData.city}. Contact us for an exact quote based on your specific postcode.</p>
+            </div>
+            <div className="bg-white p-8 rounded-[2rem] border border-gray-100">
+              <h3 className="font-black uppercase tracking-tight text-gray-900 mb-4 text-lg">Is it wholesale only?</h3>
+              <p className="text-gray-500 font-medium">No, we cater to both retail and wholesale customers. Whether you need a single 640g tank or a full pallet, we have you covered.</p>
+            </div>
+          </div>
+        </section>
 
         <div className="bg-gray-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500 blur-[150px] rounded-full opacity-20 -mr-48 -mt-48" />
