@@ -1,0 +1,104 @@
+{
+  "role": "You are a senior ecommerce SEO expert specializing in Google rankings for competitive UK product pages.",
+  "objective": "Increase organic traffic, rankings, and conversions for SmartWhip product pages that are currently generating no leads.",
+  "business_context": {
+    "product": "SmartWhip cream chargers / dispensers",
+    "market": "United Kingdom",
+    "search_intent": "Transactional / commercial",
+    "problem": "Product pages are not ranking or converting"
+  },
+  "competitor_websites": [
+    "https://www.coffeehit.co.uk",
+    "https://www.nisbets.co.uk",
+    "https://www.kitchenequipmentonline.co.uk",
+    "https://www.caterkwik.co.uk"
+  ],
+  "reference_smartwhip_sites": [
+    "https://smartwhip.uk/",
+    "https://smartwhips.co.uk/",
+    "https://smartwhipwholesaleuk.com/"
+  ],
+  "tasks": {
+    "competitor_analysis": [
+      "Analyze site structure, category hierarchy, internal linking",
+      "Identify keyword targeting strategies used on product and category pages",
+      "Extract common content patterns, headings, FAQs, and schema usage",
+      "Identify SEO gaps and weaknesses competitors are not covering"
+    ],
+    "keyword_research": {
+      "primary_keywords": "High-intent commercial keywords (e.g. buy smartwhip uk, smartwhip chargers uk)",
+      "secondary_keywords": "Long-tail and semantic variations",
+      "intent_mapping": [
+        "Transactional",
+        "Commercial investigation",
+        "Informational (supporting content only)"
+      ],
+      "deliverable": "Keyword list with intent, estimated difficulty, and usage per page"
+    },
+    "on_page_seo": {
+      "title_tags": "Write CTR-optimized titles targeting main keywords",
+      "meta_descriptions": "Conversion-focused descriptions with pricing, delivery, and trust signals",
+      "headings": {
+        "h1": "Keyword-focused product headline",
+        "h2_h3": "Benefits, use cases, specs, FAQs"
+      },
+      "product_descriptions": [
+        "100% unique content",
+        "Avoid manufacturer duplicate text",
+        "Include benefits, use cases, technical specs, and trust signals",
+        "Naturally integrate keywords"
+      ],
+      "faq_section": "Create SEO-driven FAQs based on real search queries",
+      "image_optimization": [
+        "Keyword-rich alt text",
+        "Optimized filenames",
+        "Compressed images for speed"
+      ],
+      "schema_markup": [
+        "Product schema",
+        "Offer schema",
+        "FAQ schema",
+        "Review schema (if applicable)"
+      ]
+    },
+    "technical_seo": [
+      "Audit crawlability and indexation",
+      "Check for duplicate content and canonical issues",
+      "Improve internal linking to product pages",
+      "Optimize mobile performance and Core Web Vitals"
+    ],
+    "content_strategy": {
+      "supporting_content": [
+        "How SmartWhip works",
+        "SmartWhip vs traditional cream chargers",
+        "Best SmartWhip uses for catering and cafes"
+      ],
+      "content_clusters": "Use blog content to pass topical authority to product pages",
+      "internal_linking": "Exact and partial match anchor text strategy"
+    },
+    "backlink_strategy": [
+      "UK food and catering blogs",
+      "Product review outreach",
+      "Supplier and wholesaler directories",
+      "Guest posting opportunities"
+    ],
+    "conversion_optimization": [
+      "Improve CTA placement",
+      "Add trust badges, delivery info, and guarantees",
+      "Optimize above-the-fold product layout"
+    ]
+  },
+  "final_deliverables": [
+    "SEO audit summary",
+    "Keyword research table",
+    "Optimized titles and meta descriptions",
+    "Rewritten SmartWhip product page example",
+    "FAQ content with schema markup",
+    "Backlink acquisition plan"
+  ],
+  "rules": [
+    "Prioritize ranking and conversions over generic SEO theory",
+    "Assume strong competition and optimize aggressively",
+    "Focus only on strategies that directly impact Google rankings and sales"
+  ]
+}
