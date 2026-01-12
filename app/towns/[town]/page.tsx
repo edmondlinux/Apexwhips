@@ -71,7 +71,7 @@ export default async function TownPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     'name': `SmartWhip 640g Cylinder - ${townData.city} Delivery`,
-    'description': `Premium 640g SmartWhip nitrous oxide cream charger cylinder. Food-grade N2O for professional catering and automotive use in ${townData.city}.`,
+    'description': `Premium 640g SmartWhip nitrous oxide cream charger cylinder. Food-grade N2O for professional catering and baking use in ${townData.city}.`,
     'image': `${process.env.BASE_URL || 'https://apexwhips.com'}/og_image/og_image.jpeg`,
     'brand': {
       '@type': 'Brand',
@@ -289,9 +289,9 @@ export default async function TownPage({ params }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {[
-            { icon: Truck, title: "Rapid Dispatch", text: `Get your SmartWhip delivered in ${townData.city} within 25-45 minutes. Our local courier network ensures the fastest arrival.` },
-            { icon: ShieldCheck, title: "Premium Quality", text: "We only stock 100% genuine SmartWhip cylinders containing high-purity, food-grade Nitrous Oxide." },
-            { icon: Clock, title: "24/7 Availability", text: `Need cream chargers late at night? Our ${townData.city} hub operates 24/7 to fulfill your orders anytime.` }
+            { icon: Truck, title: "Rapid Dispatch", text: `Get your SmartWhip delivered in ${townData.city} within 25-45 minutes. Our local courier network ensures the fastest arrival for catering supplies.` },
+            { icon: ShieldCheck, title: "Premium Quality", text: "We only stock 100% genuine SmartWhip cylinders containing high-purity, food-grade Nitrous Oxide for professional use." },
+            { icon: Clock, title: "24/7 Availability", text: `Need cream chargers late at night? Our ${townData.city} hub operates 24/7 to fulfill your professional needs anytime.` }
           ].map((item, i) => (
             <div key={i} className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
               <item.icon className="h-8 w-8 text-orange-500 mb-6" />
@@ -300,6 +300,39 @@ export default async function TownPage({ params }: Props) {
             </div>
           ))}
         </div>
+
+        <section className="py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-4xl font-black text-gray-900 tracking-tighter uppercase italic mb-6">Premium SmartWhip Suppliers</h2>
+                <div className="prose prose-orange text-gray-600 font-medium">
+                  <p className="mb-4">SmartWhip has revolutionized the catering industry with its high-capacity 640g cylinders. Designed for efficiency and consistent pressure, it is the preferred choice for cafes, restaurants, and professional kitchens in {townData.city}.</p>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>99.9% Pure Food-Grade Nitrous Oxide (N2O)</li>
+                    <li>Compatible with all standard pressure regulators</li>
+                    <li>Equal to 80+ individual 8g cream chargers</li>
+                    <li>TUV Certified and quality tested</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100">
+                <h3 className="text-2xl font-black text-gray-900 mb-4">FastGas & Cream Deluxe Delivery</h3>
+                <p className="text-gray-600 mb-6">Looking for alternatives? We also stock FastGas and Cream Deluxe 640g cylinders. Our local {townData.city} hub ensures you never run out of supplies during peak hours. Available for both wholesale and retail orders.</p>
+                <div className="flex gap-4">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex-1 text-center">
+                    <span className="block text-2xl font-black text-orange-500">640g</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">In Stock</span>
+                  </div>
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex-1 text-center">
+                    <span className="block text-2xl font-black text-orange-500">24/7</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Delivery</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* FAQ Section */}
         <section className="mb-20">

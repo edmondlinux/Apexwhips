@@ -330,8 +330,8 @@ export default function HomePage() {
                 <span className="ml-3 text-2xl font-black tracking-tighter uppercase italic">ApexWhips</span>
               </div>
               <p className="text-gray-400 font-medium max-w-sm">
-                Leading the market in high-performance automotive smart tech. 
-                Quality, speed, and discretion guaranteed.
+                The UK's #1 supplier of SmartWhip, FastGas, and Cream Deluxe. 
+                Premium food-grade N2O for professional results.
               </p>
             </div>
             <div className="flex flex-col md:items-end gap-4 text-gray-400 text-xs font-bold uppercase tracking-[0.3em]">
