@@ -331,7 +331,7 @@ export default function HomePage() {
               </div>
               <p className="text-gray-400 font-medium max-w-sm">
                 The UK's #1 supplier of SmartWhip, FastGas, and Cream Deluxe. 
-                Premium food-grade N2O for professional results.
+                Premium food-grade N2O for professional culinary results.
               </p>
             </div>
             <div className="flex flex-col md:items-end gap-4 text-gray-400 text-xs font-bold uppercase tracking-[0.3em]">

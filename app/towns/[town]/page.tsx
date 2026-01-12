@@ -289,9 +289,9 @@ export default async function TownPage({ params }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {[
-            { icon: Truck, title: "Rapid Dispatch", text: `Get your SmartWhip delivered in ${townData.city} within 25-45 minutes. Our local courier network ensures the fastest arrival for catering supplies.` },
-            { icon: ShieldCheck, title: "Premium Quality", text: "We only stock 100% genuine SmartWhip cylinders containing high-purity, food-grade Nitrous Oxide for professional use." },
-            { icon: Clock, title: "24/7 Availability", text: `Need cream chargers late at night? Our ${townData.city} hub operates 24/7 to fulfill your professional needs anytime.` }
+            { icon: Truck, title: "Rapid Dispatch", text: `Get your SmartWhip delivered in ${townData.city} within 25-45 minutes. Our local courier network ensures the fastest arrival for culinary supplies.` },
+            { icon: ShieldCheck, title: "Premium Quality", text: "We only stock 100% genuine SmartWhip cylinders containing high-purity, food-grade Nitrous Oxide for culinary use." },
+            { icon: Clock, title: "24/7 Availability", text: `Need cream chargers late at night? Our ${townData.city} hub operates 24/7 to fulfill your professional catering needs anytime.` }
           ].map((item, i) => (
             <div key={i} className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
               <item.icon className="h-8 w-8 text-orange-500 mb-6" />
