@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: 'ApexWhips - Premium SmartWhips UK',
+    title: 'ApexWhips - Premium SmartWhips UK| apexwhips',
     description: 'Rapid delivery of premium automotive smart technology across the UK.',
     type: 'website',
     url: baseUrl,
