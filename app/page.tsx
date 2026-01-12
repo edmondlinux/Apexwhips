@@ -173,7 +173,7 @@ export default function HomePage() {
                   >
                     <Image 
                       src="/logo/logo.jpeg" 
-                      alt="ApexWhips Logo" 
+                      alt="ApexWhips - Premier SmartWhip UK Supplier" 
                       width={200} 
                       height={200} 
                       className="rounded-3xl shadow-2xl"
@@ -182,11 +182,44 @@ export default function HomePage() {
                   </div>
                 </div>
                 PREMIUM <br />
-                <span className="text-orange-500 italic">SMARTWHIPS</span>
+                <span className="text-orange-500 italic">SMARTWHIPS UK</span>
               </h1>
               <p className="text-xl text-gray-500 font-medium leading-relaxed mb-12">
-                Get high-quality Smartwhips and FastGas (Coke,Flake,Snow) delivered anywhere in the UK in under 25 minutes from order time, via our distributed network of delivery riders.
+                Order high-quality SmartWhip cylinders and FastGas cream chargers for rapid delivery. We are the UK's leading wholesale and retail supplier of N2O cream chargers, offering local dispatch in under 25 minutes.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-4xl font-black text-gray-900 tracking-tighter uppercase italic mb-6">Why Choose SmartWhip?</h2>
+                <div className="prose prose-orange text-gray-600 font-medium">
+                  <p className="mb-4">SmartWhip is the industry standard for high-capacity cream chargers. Designed for efficiency and professional results, our 640g cylinders provide significantly more power than traditional 8g canisters.</p>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>99.9% Pure Food-Grade Nitrous Oxide (N2O)</li>
+                    <li>Large Capacity 640g & 2kg Cylinders Available</li>
+                    <li>Eco-Friendly and Cost-Effective for Businesses</li>
+                    <li>Compatible with all standard pressure regulators</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100">
+                <h3 className="text-2xl font-black text-gray-900 mb-4">FastGas & Cream Deluxe</h3>
+                <p className="text-gray-600 mb-6">In addition to the original SmartWhip, we stock premium brands like FastGas and Cream Deluxe. Whether you need single canisters or wholesale pallets, ApexWhips guarantees the best pricing in the UK.</p>
+                <div className="flex gap-4">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex-1 text-center">
+                    <span className="block text-2xl font-black text-orange-500">640g</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Standard Size</span>
+                  </div>
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex-1 text-center">
+                    <span className="block text-2xl font-black text-orange-500">2kg</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Master Size</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

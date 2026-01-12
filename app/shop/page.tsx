@@ -60,8 +60,8 @@ export default function ShopPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
               <div className="flex-1">
-                <h1 className="text-5xl font-black text-gray-900 tracking-tighter uppercase italic">All Locations</h1>
-                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">Browse products across the UK</p>
+                <h1 className="text-5xl font-black text-gray-900 tracking-tighter uppercase italic">Shop SmartWhips UK</h1>
+                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">Premium Nitrous Oxide Cream Chargers - Wholesale & Retail</p>
                 
                 <div className="mt-8 max-w-md relative group">
                   <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
@@ -69,7 +69,7 @@ export default function ShopPage() {
                   </div>
                   <Input 
                     type="text" 
-                    placeholder="Search by city or region..." 
+                    placeholder="Search by city (e.g. London, Manchester)..." 
                     className="w-full pl-14 h-14 bg-white border-2 border-gray-100 rounded-2xl font-bold text-gray-900 focus:border-orange-500 focus:ring-orange-500/20 transition-all placeholder:text-gray-400 placeholder:font-bold placeholder:uppercase placeholder:tracking-widest placeholder:text-[10px]"
                     value={searchQuery}
                     onChange={handleSearch}
@@ -77,7 +77,26 @@ export default function ShopPage() {
                 </div>
               </div>
               <div className="text-right hidden md:block">
-                <span className="text-5xl font-black text-orange-500/10 tracking-tighter leading-none select-none">SHOP ALL</span>
+                <span className="text-5xl font-black text-orange-500/10 tracking-tighter leading-none select-none">BEST PRICING</span>
+              </div>
+            </div>
+
+            <div className="mb-12 bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100">
+              <h2 className="text-2xl font-black text-gray-900 mb-4">The Best Cream Charger Brands in the UK</h2>
+              <p className="text-gray-600 mb-6">Browse our complete inventory of cream chargers including SmartWhip, Cream Deluxe, FastGas, and GoldWhip. We offer next-day delivery and local dispatch for all major UK cities.</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div className="p-4 border border-gray-50 rounded-2xl">
+                  <span className="font-black text-gray-900">SmartWhip</span>
+                </div>
+                <div className="p-4 border border-gray-50 rounded-2xl">
+                  <span className="font-black text-gray-900">Cream Deluxe</span>
+                </div>
+                <div className="p-4 border border-gray-50 rounded-2xl">
+                  <span className="font-black text-gray-900">FastGas</span>
+                </div>
+                <div className="p-4 border border-gray-50 rounded-2xl">
+                  <span className="font-black text-gray-900">GoldWhip</span>
+                </div>
               </div>
             </div>
 

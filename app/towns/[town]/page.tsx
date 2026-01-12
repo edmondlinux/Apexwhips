@@ -29,20 +29,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const baseUrl = process.env.BASE_URL || 'https://apexwhips.com';
   
   return {
-    title: `Smartwhip in ${cityName} | Buy Smartwhip ${cityName} - ApexWhips`,
-    description: `Get Smartwhip in ${cityName}. Fast delivery of Smartwhips, Flake, and Fastgas in ${cityName}. Buy Smartwhip for sale in ${cityName} today with rapid dispatch.`,
+    title: `SmartWhip ${cityName} | Buy 640g Cream Chargers in ${cityName} | Fast Delivery`,
+    description: `Order SmartWhip, FastGas, and Cream Deluxe in ${cityName}. Rapid 25-minute delivery for 640g N2O cylinders and wholesale cases in ${cityName}. Best local prices.`,
     alternates: {
       canonical: `/towns/${town}`,
     },
     keywords: [
-      `smartwhips in ${cityName}`,
-      `balloons in ${cityName}`,
-      `flake in ${cityName}`,
-      `fastgas in ${cityName}`,
-      `smartwhips for sale in ${cityName}`,
-      `buy smartwhip in ${cityName}`,
-      `Smartwhip in ${cityName}`,
-      `ballon in ${cityName}`
+      `SmartWhip ${cityName}`,
+      `buy SmartWhip ${cityName}`,
+      `FastGas ${cityName}`,
+      `Cream Deluxe ${cityName}`,
+      `cream chargers ${cityName}`,
+      `N2O delivery ${cityName}`,
+      `SmartWhip for sale ${cityName}`,
+      `wholesale SmartWhip ${cityName}`
     ],
     openGraph: {
       title: `Smartwhip in ${cityName} | ApexWhips`,
@@ -71,8 +71,10 @@ export default async function TownPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: `ApexWhips ${townData.city}`,
-    description: `Premium automotive SmartWhip delivery in ${townData.city}`,
+    description: `Premium SmartWhip, FastGas, and Cream Deluxe delivery in ${townData.city}. 640g N2O cream chargers with rapid local dispatch.`,
     url: `${process.env.BASE_URL || 'https://apexwhips.com'}/towns/${town}`,
+    telephone: "07871343140",
+    priceRange: "££",
     address: {
       '@type': 'PostalAddress',
       addressLocality: townData.city,
@@ -84,6 +86,14 @@ export default async function TownPage({ params }: Props) {
       latitude: townData.lat,
       longitude: townData.lng,
     },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
   };
 
   const products = [

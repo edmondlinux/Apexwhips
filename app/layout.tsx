@@ -12,9 +12,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  title: 'ApexWhips - SmartWhips across the UK | Fast Delivery',
-  description: 'Premium automotive SmartWhips available for delivery across all major UK towns. Buy SmartWhips, Fastgas, and Flake with rapid local dispatch.',
-  keywords: ['Smartwhips for sale in UK', 'Buy smartwhips in UK', 'smartwhips UK', 'ApexWhips', 'Smartwhip', 'Fastgas', 'Flake'],
+  title: 'SmartWhip UK | Buy SmartWhips, FastGas & Cream Deluxe | Rapid Delivery',
+  description: 'The UK\'s #1 supplier for SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
+  keywords: [
+    'SmartWhip UK', 
+    'Buy SmartWhips online', 
+    'SmartWhip 640g', 
+    'FastGas cylinders', 
+    'Cream Deluxe chargers', 
+    'Nitrous Oxide UK', 
+    'Cream chargers near me', 
+    'SmartWhip wholesale',
+    'Fastgas UK',
+    'Cream Deluxe UK'
+  ],
   icons: {
     icon: [
       { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -85,6 +96,23 @@ export default function RootLayout({
           `}
         </Script>
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "ApexWhips",
+              "url": baseUrl,
+              "logo": `${baseUrl}/logo/logo.jpeg`,
+              "description": "Premium SmartWhip and Cream Charger supplier in the UK.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "GB"
+              }
+            })
+          }}
+        />
         <FloatingActionButtons />
         <BottomSheet />
       </body>
