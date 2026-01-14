@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   return {
     title: `Buy SmartWhip ${cityName} | Fast 640g,2kg Cream Charger Delivery in ${cityName}`,
-    description: `Order genuine SmartWhip,Fastgas,Cream delux 640g cylinders in ${cityName}. Fast 25 min delivery across ${cityName} for cream chargers, FastGas & Cream Deluxe. Best UK prices guaranteed.`,
+    description: `Buy genuine Smartwhip, Fastgas, Cream delux 640g canisters in ${cityName}. Fast 25 min delivery across ${cityName} for cream chargers, FastGas & Cream Deluxe. Best UK prices guaranteed.`,
     alternates: {
       canonical: `/towns/${town}`,
     },
@@ -50,10 +50,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `Smartwhip in ${cityName} | Apexwhips.com`,
       description: `Fast delivery of Smartwhip, Flake,Cocaine, and Fastgas in ${cityName}.`,
       images: ['/og_image/og_image.jpeg'],
-      url: `${baseUrl}/towns/${town}`,
-      type: 'website',
-      siteName: 'ApexWhips',
-      locale: 'en_GB',
     },
     twitter: {
       card: 'summary_large_image',
@@ -77,7 +73,7 @@ export default async function TownPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     'name': `SmartWhip 640g Cylinder - ${townData.city} Delivery`,
-    'description': `Premium 640g Smartwhip, Fastgas, Cream delux nitrous oxide cream charger canister.N2O delivery in ${townData.city}.`,
+    'description': `Premium 640g Smartwhip, Fastgas, Cream delux nitrous oxide cream charger canister, N2O delivery in ${townData.city}.`,
     'image': `${process.env.BASE_URL || 'https://www.apexwhips.com'}/og_image/og_image.jpeg`,
     'brand': {
       '@type': 'Brand',
