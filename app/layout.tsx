@@ -5,15 +5,15 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import Script from 'next/script';
 
-const baseUrl = process.env.BASE_URL || 'https://apexwhips.com';
+const baseUrl = process.env.BASE_URL || 'https://www.apexwhips.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   alternates: {
     canonical: '/',
   },
-  title: 'SmartWhip UK | Buy SmartWhips, FastGas & Cream Deluxe | Rapid Delivery',
-  description: 'The UK\'s #1 supplier for SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
+  title: 'SmartWhip UK | Buy Smartwhips, FastGas & Cream Deluxe | Rapid Delivery',
+  description: 'The UK\'s #1 supplier for SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
   keywords: [
     'SmartWhip UK', 
     'Buy SmartWhips online', 
@@ -24,7 +24,11 @@ export const metadata: Metadata = {
     'Cream chargers near me', 
     'SmartWhip wholesale',
     'Fastgas UK',
-    'Cream Deluxe UK'
+    'Cream Deluxe UK',
+    'baloons UK',
+    'baloons near me',
+    'ApexWhips',
+    'apexwhips'
   ],
   icons: {
     icon: [
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'ApexWhips - Premium SmartWhips UK| apexwhips',
-    description: 'Rapid delivery of premium automotive smart technology across the UK.',
+    description: 'Rapid delivery of SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
     type: 'website',
     url: baseUrl,
     images: [
@@ -60,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ApexWhips - Premium SmartWhips UK',
-    description: 'Rapid delivery of premium automotive smart technology across the UK.',
+    description: 'Rapid delivery of SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
     images: ['/og_image/og_image.jpeg'],
   }
 };

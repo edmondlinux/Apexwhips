@@ -26,27 +26,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!townData) return { title: 'Town Not Found' };
 
   const cityName = townData.city;
-  const baseUrl = process.env.BASE_URL || 'https://apexwhips.com';
+  const baseUrl = process.env.BASE_URL || 'https://www.apexwhips.com';
   
   return {
-    title: `Buy SmartWhip ${cityName} | Fast 640g Cream Charger Delivery in ${cityName}`,
-    description: `Order genuine SmartWhip 640g cylinders in ${cityName}. Rapid 25-min delivery across ${cityName} for cream chargers, FastGas & Cream Deluxe. Best UK prices guaranteed.`,
+    title: `Buy SmartWhip ${cityName} | Fast 640g,2kg Cream Charger Delivery in ${cityName}`,
+    description: `Order genuine SmartWhip,Fastgas,Cream delux 640g cylinders in ${cityName}. Fast 25 min delivery across ${cityName} for cream chargers, FastGas & Cream Deluxe. Best UK prices guaranteed.`,
     alternates: {
       canonical: `/towns/${town}`,
     },
     keywords: [
-      `SmartWhip ${cityName}`,
-      `buy SmartWhip ${cityName}`,
-      `SmartWhip delivery ${cityName}`,
+      `Smartwhip ${cityName}`,
+      `buy Smartwhip ${cityName}`,
+      `Smartwhip delivery ${cityName}`,
       `640g cream chargers ${cityName}`,
       `FastGas ${cityName}`,
       `Cream Deluxe ${cityName}`,
       `N2O cylinders ${cityName}`,
-      `SmartWhip wholesale ${cityName}`
+      `Smartwhip wholesale ${cityName}`,
+      `smart whip ${cityName}`,
+      `smartwhip Near ${cityName}`
     ],
     openGraph: {
-      title: `Smartwhip in ${cityName} | ApexWhips`,
-      description: `Fast delivery of Smartwhips, Flake, and Fastgas in ${cityName}.`,
+      title: `Smartwhip in ${cityName} | Apexwhips.com`,
+      description: `Fast delivery of Smartwhip, Flake,Cocaine, and Fastgas in ${cityName}.`,
       images: ['/og_image/og_image.jpeg'],
     },
     twitter: {
@@ -71,11 +73,11 @@ export default async function TownPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     'name': `SmartWhip 640g Cylinder - ${townData.city} Delivery`,
-    'description': `Premium 640g SmartWhip nitrous oxide cream charger cylinder. Food-grade N2O for professional catering and baking use in ${townData.city}.`,
-    'image': `${process.env.BASE_URL || 'https://apexwhips.com'}/og_image/og_image.jpeg`,
+    'description': `Premium 640g Smartwhip, Fastgas, Cream delux nitrous oxide cream charger canister.N2O delivery in ${townData.city}.`,
+    'image': `${process.env.BASE_URL || 'https://www.apexwhips.com'}/og_image/og_image.jpeg`,
     'brand': {
       '@type': 'Brand',
-      'name': 'SmartWhip'
+      'name': 'Smartwhip'
     },
     'offers': {
       '@type': 'Offer',
@@ -99,15 +101,15 @@ export default async function TownPage({ params }: Props) {
         'name': `How fast is SmartWhip delivery in ${townData.city}?`,
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': `We offer rapid local dispatch in ${townData.city}, with most orders delivered within 25-45 minutes.`
+          'text': `We offer rapid local delivery of smartwhip, Fastgas, Flake in ${townData.city}, with most orders delivered within 25-45 minutes.`
         }
       },
       {
         '@type': 'Question',
-        'name': `Is the SmartWhip food-grade?`,
+        'name': `Is the Smartwhip food-grade?`,
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': "Yes, all our SmartWhip canisters contain 99.9% pure food-grade Nitrous Oxide (N2O)."
+          'text': "Yes, all our Smartwhip canisters contain 99.9% pure food-grade Nitrous Oxide (N2O)."
         }
       }
     ]
@@ -116,17 +118,17 @@ export default async function TownPage({ params }: Props) {
   const products = [
     {
       id: 'single',
-      name: 'SmartWhip 640g',
-      subtitle: 'Premium N2O Cylinder',
-      description: `The industry-leading 640g SmartWhip cylinder. Provides consistent pressure and high-purity N2O for professional results in ${townData.city}.`,
+      name: 'Smartwhip 640g, 2kg',
+      subtitle: 'Premium N2O Canister',
+      description: `The industry leading 640g Smartwhip c. Provides consistent pressure and high-purity N2O gas, Fast delivery in ${townData.city}.`,
       price: '£30',
       tag: 'Best Seller'
     },
     {
       id: 'case',
-      name: 'SmartWhip Case (6x)',
+      name: 'Smartwhip Case (6x)',
       subtitle: 'Wholesale Bulk Pack',
-      description: `Stock up with our 6-unit master case. The most cost-effective way to buy SmartWhip in ${townData.admin_name} for large events or business use.`,
+      description: `Stock up with our 6-unit master case. The most cost-effective way to buy Smartwhip in ${townData.admin_name} for large events or business use.`,
       price: '£130',
       tag: 'Best Value'
     }
