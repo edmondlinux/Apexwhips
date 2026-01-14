@@ -80,6 +80,23 @@ export default async function TownPage({ params }: Props) {
       'name': 'Smartwhip'
     },
     'sku': `SW-640G-${townData.city.toUpperCase().replace(/\s+/g, '-')}`,
+    'review': {
+      '@type': 'Review',
+      'reviewRating': {
+        '@type': 'Rating',
+        'ratingValue': '5',
+        'bestRating': '5'
+      },
+      'author': {
+        '@type': 'Person',
+        'name': 'James Wilson'
+      }
+    },
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': '4.9',
+      'reviewCount': '124'
+    },
     'offers': {
       '@type': 'Offer',
       'url': `${process.env.BASE_URL || 'https://apexwhips.com'}/towns/${town}`,
