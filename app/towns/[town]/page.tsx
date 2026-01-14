@@ -79,12 +79,53 @@ export default async function TownPage({ params }: Props) {
       '@type': 'Brand',
       'name': 'Smartwhip'
     },
+    'sku': `SW-640G-${townData.city.toUpperCase().replace(/\s+/g, '-')}`,
     'offers': {
       '@type': 'Offer',
       'url': `${process.env.BASE_URL || 'https://apexwhips.com'}/towns/${town}`,
       'priceCurrency': 'GBP',
       'price': '30.00',
+      'priceValidUntil': '2026-12-31',
+      'itemCondition': 'https://schema.org/NewCondition',
       'availability': 'https://schema.org/InStock',
+      'shippingDetails': {
+        '@type': 'OfferShippingDetails',
+        'shippingRate': {
+          '@type': 'MonetaryAmount',
+          'value': '0',
+          'currency': 'GBP'
+        },
+        'shippingDestination': {
+          '@type': 'DefinedRegion',
+          'addressCountry': 'GB'
+        },
+        'deliveryTime': {
+          '@type': 'ShippingDeliveryTime',
+          'handlingTime': {
+            '@type': 'QuantitativeValue',
+            'minValue': 0,
+            'maxValue': 1,
+            'unitCode': 'DAY'
+          },
+          'transitTime': {
+            '@type': 'ShippingDeliveryTime',
+            'transitTime': {
+              '@type': 'QuantitativeValue',
+              'minValue': 0,
+              'maxValue': 1,
+              'unitCode': 'DAY'
+            }
+          }
+        }
+      },
+      'hasMerchantReturnPolicy': {
+        '@type': 'MerchantReturnPolicy',
+        'applicableCountry': 'GB',
+        'returnPolicyCategory': 'https://schema.org/MerchantReturnFiniteReturnPeriod',
+        'merchantReturnDays': 30,
+        'returnMethod': 'https://schema.org/ReturnByMail',
+        'returnFees': 'https://schema.org/FreeReturn'
+      },
       'areaServed': {
         '@type': 'City',
         'name': townData.city
