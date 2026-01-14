@@ -50,6 +50,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `Smartwhip in ${cityName} | Apexwhips.com`,
       description: `Fast delivery of Smartwhip, Flake,Cocaine, and Fastgas in ${cityName}.`,
       images: ['/og_image/og_image.jpeg'],
+      url: `${baseUrl}/towns/${town}`,
+      type: 'website',
+      siteName: 'ApexWhips',
+      locale: 'en_GB',
     },
     twitter: {
       card: 'summary_large_image',
