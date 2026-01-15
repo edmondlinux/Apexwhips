@@ -10,7 +10,6 @@ import gbData from '@/data/gb.json';
 interface Props {
   params: Promise<{ town: string }>;
 }
-
 export async function generateStaticParams() {
   return gbData.map((town) => ({
     town: town.city.toLowerCase().replace(/\s+/g, '-'),
