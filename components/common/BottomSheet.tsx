@@ -5,7 +5,8 @@ import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import townsData from '@/data/towns.json';
+import { BOTTOM_SHEET_SCROLL_THRESHOLD, BOTTOM_SHEET_RESULTS_LIMIT } from '@/constants';
+import { searchTownsSuggestions } from '@/services/town.service';
 import Link from 'next/link';
 
 export function BottomSheet() {
@@ -15,7 +16,7 @@ export function BottomSheet() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 2500) {
+      if (window.scrollY > BOTTOM_SHEET_SCROLL_THRESHOLD) {
         if (!hasScrolled) {
           setIsOpen(true);
           setHasScrolled(true);
@@ -27,32 +28,27 @@ export function BottomSheet() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasScrolled]);
 
-  const filteredTowns = useMemo(() => {
-    if (!search) return [];
-    return townsData
-      .filter((town) => 
-        town.name.toLowerCase().includes(search.toLowerCase())
-      )
-      .slice(0, 10);
-  }, [search]);
+  const filteredTowns = useMemo(
+    () => searchTownsSuggestions(search, BOTTOM_SHEET_RESULTS_LIMIT),
+    [search]
+  );
 
   if (!isOpen && !hasScrolled) return null;
 
   return (
     <div
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ease-in-out transform",
-        isOpen ? "translate-y-0" : "translate-y-full"
+        'fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ease-in-out transform',
+        isOpen ? 'translate-y-0' : 'translate-y-full'
       )}
     >
       <div className="bg-white rounded-t-2xl shadow-[0_-8px_30px_rgb(0,0,0,0.12)] border-t border-gray-100 p-6 pb-8">
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h2 className="text-lg font-bold text-gray-900 mb-1">
-              Find Your Town
-            </h2>
+            <h2 className="text-lg font-bold text-gray-900 mb-1">Find Your Town</h2>
             <p className="text-sm text-gray-600">
-              We noticed you&apos;ve been scrolling in search of your town. Quickly find it by searching its name below.
+              We noticed you&apos;ve been scrolling in search of your town. Quickly find it by
+              searching its name below.
             </p>
           </div>
           <Button

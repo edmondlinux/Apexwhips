@@ -1,5 +1,5 @@
-import { FloatingActionButtons } from '@/components/FloatingActionButtons';
-import { BottomSheet } from '@/components/BottomSheet';
+import { FloatingActionButtons } from '@/components/common/FloatingActionButtons';
+import { BottomSheet } from '@/components/common/BottomSheet';
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
@@ -13,35 +13,32 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: 'SmartWhip UK | Buy Smartwhips, FastGas & Cream Deluxe | Rapid Delivery',
-  description: 'The UK\'s #1 supplier for SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
+  description:
+    "The UK's #1 supplier for SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.",
   keywords: [
-    'SmartWhip UK', 
-    'Buy SmartWhips online', 
-    'SmartWhip 640g', 
-    'FastGas cylinders', 
-    'Cream Deluxe chargers', 
-    'Nitrous Oxide UK', 
-    'Cream chargers near me', 
+    'SmartWhip UK',
+    'Buy SmartWhips online',
+    'SmartWhip 640g',
+    'FastGas cylinders',
+    'Cream Deluxe chargers',
+    'Nitrous Oxide UK',
+    'Cream chargers near me',
     'SmartWhip wholesale',
     'Fastgas UK',
     'Cream Deluxe UK',
     'baloons UK',
     'baloons near me',
     'ApexWhips',
-    'apexwhips'
+    'apexwhips',
   ],
   icons: {
     icon: [
       { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon/favicon.ico' }
+      { url: '/favicon/favicon.ico' },
     ],
-    apple: [
-      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
-    ],
-    other: [
-      { rel: 'manifest', url: '/favicon/site.webmanifest' }
-    ]
+    apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    other: [{ rel: 'manifest', url: '/favicon/site.webmanifest' }],
   },
   robots: {
     index: true,
@@ -49,7 +46,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'ApexWhips - Premium SmartWhips UK| apexwhips',
-    description: 'Fast delivery of Smartwhip, FastGas, and Cream Deluxe canisters. Buy premium 640g, 2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
+    description:
+      'Fast delivery of Smartwhip, FastGas, and Cream Deluxe canisters. Buy premium 640g, 2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
     type: 'website',
     url: baseUrl,
     images: [
@@ -58,33 +56,27 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: 'ApexWhips Logo',
-      }
+      },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ApexWhips - Premium SmartWhips UK',
-    description: 'FFast delivery of Smartwhip, Fastgas, and Cream Deluxe canisters. Get original 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
+    description:
+      'Fast delivery of Smartwhip, Fastgas, and Cream Deluxe canisters. Get original 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
     images: ['/og_image/og_image.jpeg'],
-  }
+  },
 };
 
 export const viewport: Viewport = {
-  maximumScale: 1
+  maximumScale: 1,
 };
 
 const manrope = Manrope({ subsets: ['latin'] });
 
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`bg-white text-black ${manrope.className}`}
-    >
+    <html lang="en" className={`bg-white text-black ${manrope.className}`}>
       <body className="min-h-[100dvh] bg-gray-50">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SVEFLWNMY3"
@@ -95,7 +87,6 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
             gtag('config', 'G-SVEFLWNMY3');
           `}
         </Script>
@@ -104,17 +95,17 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "ApexWhips",
-              "url": baseUrl,
-              "logo": `${baseUrl}/logo/logo.jpeg`,
-              "description": "Premium SmartWhip and Cream Charger supplier in the UK.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "GB"
-              }
-            })
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'ApexWhips',
+              url: baseUrl,
+              logo: `${baseUrl}/logo/logo.jpeg`,
+              description: 'Premium SmartWhip and Cream Charger supplier in the UK.',
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'GB',
+              },
+            }),
           }}
         />
         <FloatingActionButtons />

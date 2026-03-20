@@ -2,74 +2,103 @@
 
 ## Overview
 
-This is a Next.js SaaS starter template designed for building subscription-based applications. It provides a foundation with authentication, Stripe payment integration, team management, and a dashboard for logged-in users. The application includes a marketing landing page, pricing page connected to Stripe Checkout, and CRUD operations for users and teams with role-based access control (Owner/Member roles).
+ApexWhips is a Next.js e-commerce and SEO lead generation platform for a UK-based supplier specialising in rapid delivery of culinary cream chargers (SmartWhip, FastGas, Cream Deluxe). The app generates programmatic landing pages for hundreds of UK towns to capture local search traffic.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
+## Project Structure
+
+```
+app/                        # Next.js App Router pages
+  layout.tsx                # Root layout (fonts, metadata, analytics, global components)
+  page.tsx                  # Home page with town grid and search
+  not-found.tsx             # 404 page
+  globals.css               # Global styles
+  sitemap.ts                # Dynamic sitemap for all town routes
+  shop/page.tsx             # Paginated shop with search
+  towns/[town]/page.tsx     # Dynamic SEO landing page per town
+
+components/
+  ui/                       # shadcn/ui primitives (button, card, input, etc.)
+  layout/                   # Shared layout components
+    Logo.tsx                # ApexWhips logo (Zap icon + name)
+    Footer.tsx              # Footer with full / compact / town variants
+  common/                   # Reusable domain components
+    BottomSheet.tsx         # Scroll-triggered town search overlay
+    FloatingActionButtons.tsx # Fixed WhatsApp / Telegram buttons
+
+services/                   # Business logic and external API clients
+  town.service.ts           # All town data access (getAllTowns, getTownById, search, etc.)
+  payment.service.ts        # Stripe client instance
+
+lib/                        # Core utilities and infrastructure
+  auth.ts                   # Password hashing / comparison (bcryptjs)
+  utils.ts                  # Tailwind class merger (cn)
+  db/
+    drizzle.ts              # Drizzle ORM client (postgres.js)
+    schema.ts               # Database tables: users, teams, teamMembers, activityLogs, invitations
+    seed.ts                 # Database seed script
+    setup.ts                # Interactive environment setup script
+    migrations/             # Drizzle SQL migration files
+
+types/
+  index.ts                  # Shared TypeScript interfaces (Town, TownDetail, Product) + DB type re-exports
+
+constants/
+  index.ts                  # Static values: PRICES, TOWNS_PER_PAGE, SITE_NAME, BASE_URL
+
+hooks/                      # Custom React hooks (empty — add hooks here as needed)
+
+data/
+  gb.json                   # Full UK town dataset (city, admin, lat, lng, population, iso2)
+  towns.json                # Simplified towns list for BottomSheet search
+
+public/                     # Static assets (logo, OG image, favicons)
+
+middleware.ts               # Security headers for all routes
+```
+
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: Next.js 15 with App Router, using experimental features (PPR - Partial Prerendering, client segment cache)
-- **Styling**: Tailwind CSS v4 with CSS variables for theming, using the shadcn/ui component library (new-york style)
-- **UI Components**: Radix UI primitives wrapped with custom styling via shadcn/ui pattern
+- **Framework**: Next.js 15 with App Router, experimental PPR enabled
+- **Styling**: Tailwind CSS v4 with shadcn/ui (new-york style)
 - **Font**: Manrope (Google Fonts)
 - **Icons**: Lucide React
 
-### Backend Architecture
-- **API Pattern**: Next.js Server Actions with Zod schema validation
-- **Authentication**: Email/password auth using JWTs stored in cookies, with bcryptjs for password hashing and jose for JWT handling
-- **Middleware**: Global middleware protects authenticated routes; local middleware validates Server Actions
+### SEO Strategy
+- `generateStaticParams` in `towns/[town]/page.tsx` pre-renders a page per UK town
+- Each town page has dynamic `generateMetadata`, JSON-LD Product + FAQ schema
+- `app/sitemap.ts` generates the full sitemap automatically
 
 ### Data Storage
 - **Database**: PostgreSQL
 - **ORM**: Drizzle ORM with drizzle-kit for migrations
-- **Schema Location**: `lib/db/schema.ts`
-- **Migrations**: Stored in `lib/db/migrations/`
-- **Connection**: Uses `postgres` package (postgres.js driver)
+- **Schema**: `lib/db/schema.ts`
+- **Migrations**: `lib/db/migrations/`
 
-### Database Schema
-Key tables:
-- `users`: User accounts with email, password hash, role, timestamps
-- `teams`: Team entities with Stripe integration fields (customer ID, subscription ID, product ID, plan name, status)
-- `team_members`: Junction table linking users to teams with roles
-- `activity_logs`: Audit trail for user actions within teams
+### Authentication
+- Password hashing: bcryptjs (`lib/auth.ts`)
+- JWTs: jose library
+- Sessions: HTTP-only cookies
 
-### Authentication Flow
-- Password hashing with bcryptjs
-- JWT tokens managed via jose library
-- Session stored in HTTP-only cookies
-- Role-based access: Owner and Member roles per team
+### Ordering Flow
+- No traditional checkout — "Order Now" buttons link to WhatsApp / Telegram
+- URLs supplied via `NEXT_PUBLIC_WHATSAPP_URL` and `NEXT_PUBLIC_TELEGRAM_URL` env vars
 
-## External Dependencies
-
-### Payment Processing
-- **Stripe**: Full integration for subscriptions and payments
-  - Stripe Checkout for payment flow
-  - Stripe Customer Portal for subscription management
-  - Products and prices created via seed script (Base: $8/month, Plus: $12/month with 7-day trials)
-  - Requires `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables
-
-### Database
-- **PostgreSQL**: Required external database
-  - Connection string via `POSTGRES_URL` environment variable
-  - Drizzle ORM handles all database operations
-
-### Environment Variables Required
+## Environment Variables Required
+- `NEXT_PUBLIC_WHATSAPP_URL`: WhatsApp order link
+- `NEXT_PUBLIC_TELEGRAM_URL`: Telegram order link
+- `BASE_URL`: Canonical base URL (default: https://www.apexwhips.com)
 - `POSTGRES_URL`: PostgreSQL connection string
-- `AUTH_SECRET`: Secret for JWT signing (auto-generated by setup script)
 - `STRIPE_SECRET_KEY`: Stripe API secret key
 - `STRIPE_WEBHOOK_SECRET`: Stripe webhook signing secret
-- `BASE_URL`: Application base URL for Stripe redirects
+- `AUTH_SECRET`: JWT signing secret
 
-### Development Tools
-- Stripe CLI: Required for local webhook testing (`stripe login` before development)
-- Drizzle Kit: Database migrations and studio (`pnpm db:generate`, `pnpm db:migrate`, `pnpm db:studio`)
-
-### NPM Scripts
-- `pnpm dev`: Start development server with Turbopack
-- `pnpm db:setup`: Interactive setup for environment variables
+## NPM Scripts
+- `npm run dev`: Start development server (Turbopack, port 5000)
 - `pnpm db:seed`: Seed database with test user and Stripe products
 - `pnpm db:generate`: Generate Drizzle migrations
 - `pnpm db:migrate`: Run database migrations
