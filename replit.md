@@ -18,7 +18,9 @@ app/                        # Next.js App Router pages
   globals.css               # Global styles
   sitemap.ts                # Dynamic sitemap for all town routes
   shop/page.tsx             # Paginated shop with search
-  towns/[town]/page.tsx     # Dynamic SEO landing page per town
+  towns/[town]/
+    layout.tsx              # SEO layer: generateMetadata + JSON-LD structured data scripts
+    page.tsx                # UI only: generateStaticParams + page render
 
 components/
   ui/                       # shadcn/ui primitives (button, card, input, etc.)
@@ -35,6 +37,7 @@ services/                   # Business logic and external API clients
 
 lib/                        # Core utilities and infrastructure
   auth.ts                   # Password hashing / comparison (bcryptjs)
+  seo.ts                    # JSON-LD builders and metadata helpers (buildTownMetadata, buildTownProductJsonLd, buildTownFaqJsonLd)
   utils.ts                  # Tailwind class merger (cn)
   db/
     drizzle.ts              # Drizzle ORM client (postgres.js)

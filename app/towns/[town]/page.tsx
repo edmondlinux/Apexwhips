@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Zap, MapPin, MessageCircle, Send, ArrowLeft, ShieldCheck, Truck, Clock } from 'lucide-react';
@@ -18,45 +17,6 @@ export async function generateStaticParams() {
   return getStaticTownParams();
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { town } = await params;
-  const townData = getTownById(town);
-
-  if (!townData) return { title: 'Town Not Found' };
-
-  const cityName = townData.city;
-  const baseUrl = process.env.BASE_URL || 'https://www.apexwhips.com';
-
-  return {
-    title: `Buy SmartWhip ${cityName} | Fast 640g,2kg Cream Charger Delivery in ${cityName}`,
-    description: `Buy genuine Smartwhip, Fastgas, Cream delux 640g canisters in ${cityName}. Fast 25 min delivery across ${cityName} for cream chargers, FastGas & Cream Deluxe. Best UK prices guaranteed.`,
-    alternates: {
-      canonical: `/towns/${town}`,
-    },
-    keywords: [
-      `Smartwhip ${cityName}`,
-      `buy Smartwhip ${cityName}`,
-      `Smartwhip delivery ${cityName}`,
-      `640g cream chargers ${cityName}`,
-      `FastGas ${cityName}`,
-      `Cream Deluxe ${cityName}`,
-      `N2O cylinders ${cityName}`,
-      `Smartwhip wholesale ${cityName}`,
-      `smart whip ${cityName}`,
-      `smartwhip Near ${cityName}`,
-    ],
-    openGraph: {
-      title: `Smartwhip in ${cityName} | Apexwhips.com`,
-      description: `Fast delivery of Smartwhip and Fastgas in ${cityName}.`,
-      images: ['/og_image/og_image.jpeg'],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      images: ['/og_image/og_image.jpeg'],
-    },
-  };
-}
-
 export default async function TownPage({ params }: Props) {
   const { town } = await params;
   const townData = getTownById(town);
@@ -64,113 +24,6 @@ export default async function TownPage({ params }: Props) {
   if (!townData) {
     notFound();
   }
-
-  const baseUrl = process.env.BASE_URL || 'https://www.apexwhips.com';
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: `SmartWhip 640g Cylinder - ${townData.city} Delivery`,
-    description: `Premium 640g Smartwhip, Fastgas, Cream delux nitrous oxide cream charger canister, N2O delivery in ${townData.city}.`,
-    image: `${baseUrl}/og_image/og_image.jpeg`,
-    brand: {
-      '@type': 'Brand',
-      name: 'Smartwhip',
-    },
-    sku: `SW-640G-${townData.city.toUpperCase().replace(/\s+/g, '-')}`,
-    review: {
-      '@type': 'Review',
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: '5',
-        bestRating: '5',
-      },
-      author: {
-        '@type': 'Person',
-        name: 'James Wilson',
-      },
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '124',
-    },
-    offers: {
-      '@type': 'Offer',
-      url: `${baseUrl}/towns/${town}`,
-      priceCurrency: 'GBP',
-      price: '30.00',
-      priceValidUntil: '2026-12-31',
-      itemCondition: 'https://schema.org/NewCondition',
-      availability: 'https://schema.org/InStock',
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '0',
-          currency: 'GBP',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'GB',
-        },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 0,
-            maxValue: 1,
-            unitCode: 'DAY',
-          },
-          transitTime: {
-            '@type': 'ShippingDeliveryTime',
-            transitTime: {
-              '@type': 'QuantitativeValue',
-              minValue: 0,
-              maxValue: 1,
-              unitCode: 'DAY',
-            },
-          },
-        },
-      },
-      hasMerchantReturnPolicy: {
-        '@type': 'MerchantReturnPolicy',
-        applicableCountry: 'GB',
-        returnPolicyCategory:
-          'https://schema.org/MerchantReturnFiniteReturnPeriod',
-        merchantReturnDays: 30,
-        returnMethod: 'https://schema.org/ReturnByMail',
-        returnFees: 'https://schema.org/FreeReturn',
-      },
-      areaServed: {
-        '@type': 'City',
-        name: townData.city,
-      },
-    },
-  };
-
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: `How fast is SmartWhip delivery in ${townData.city}?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `We offer rapid local delivery of smartwhip and Fastgas in ${townData.city}, with most orders delivered within 25-45 minutes.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is the Smartwhip food-grade?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes, all our Smartwhip canisters contain 99.9% pure food-grade Nitrous Oxide (N2O).',
-        },
-      },
-    ],
-  };
 
   const products: Product[] = [
     {
@@ -193,15 +46,6 @@ export default async function TownPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white selection:bg-orange-100 selection:text-orange-900">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
           <Link href="/" className="flex items-center group">
@@ -259,6 +103,7 @@ export default async function TownPage({ params }: Props) {
                   src="/IMG_1867.jpeg"
                   alt={product.name}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900/60 to-transparent" />
