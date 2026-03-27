@@ -113,8 +113,8 @@ export function buildTownFaqJsonLd(townData: TownDetail) {
 export function buildTownMetadata(townData: TownDetail, townSlug: string) {
   const cityName = townData.city;
   return {
-    title: `Buy Smartwhip in ${cityName} | Cream Charger Delivery in ${cityName}`,
-    description: `Buy genuine Smartwhip, Fastgas, Cream Deluxe 640g canisters in ${cityName}. Fast 25 min delivery across ${cityName}, Best Smartwhip UK prices guaranteed.`,
+    title: `Buy Smartwhip in ${cityName} | Fast Delivery | Order via WhatsApp or Telegram`,
+    description: `Do you need Smartwhip fast? Look no further — order from ApexWhips for just £30 and have it delivered in under 30 mins in ${cityName}.`,
     alternates: {
       canonical: `/towns/${townSlug}`,
     },
