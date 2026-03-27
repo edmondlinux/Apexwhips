@@ -6,7 +6,7 @@ export function buildTownProductJsonLd(townData: TownDetail, townSlug: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: `SmartWhip 640g Cylinder - ${townData.city} Delivery`,
+    name: `SmartWhip 640g- ${townData.city} Delivery`,
     description: `Premium 640g Smartwhip, Fastgas, Cream Deluxe nitrous oxide cream charger canister, N2O delivery in ${townData.city}.`,
     image: `${BASE_URL}/og_image/og_image.jpeg`,
     brand: {
@@ -113,8 +113,8 @@ export function buildTownFaqJsonLd(townData: TownDetail) {
 export function buildTownMetadata(townData: TownDetail, townSlug: string) {
   const cityName = townData.city;
   return {
-    title: `Buy SmartWhip ${cityName} | Fast 640g,2kg Cream Charger Delivery in ${cityName}`,
-    description: `Buy genuine Smartwhip, Fastgas, Cream Deluxe 640g canisters in ${cityName}. Fast 25 min delivery across ${cityName} for cream chargers, FastGas & Cream Deluxe. Best UK prices guaranteed.`,
+    title: `Buy Smartwhip in ${cityName} | Cream Charger Delivery in ${cityName}`,
+    description: `Buy genuine Smartwhip, Fastgas, Cream Deluxe 640g canisters in ${cityName}. Fast 25 min delivery across ${cityName}, Best Smartwhip UK prices guaranteed.`,
     alternates: {
       canonical: `/towns/${townSlug}`,
     },
