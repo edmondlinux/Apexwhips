@@ -11,6 +11,7 @@ import { Footer } from '@/components/layout/Footer';
 import { getAllTowns, getTownRecommendations } from '@/services/town.service';
 import { PRICES, TOWNS_PER_PAGE_HOME } from '@/constants';
 import type { Town } from '@/types';
+import { isUKPostcode, postcodeToSlug } from '@/lib/postcode';
 
 export default function HomePage() {
   const [visibleTowns, setVisibleTowns] = useState(TOWNS_PER_PAGE_HOME);
@@ -32,6 +33,15 @@ export default function HomePage() {
     () => getTownRecommendations(searchQuery),
     [searchQuery]
   );
+
+  const postcodeMatch = useMemo(() => {
+    if (!searchQuery) return null;
+    const q = searchQuery.trim();
+    if (isUKPostcode(q)) {
+      return { slug: postcodeToSlug(q), label: q.toUpperCase() };
+    }
+    return null;
+  }, [searchQuery]);
 
   useEffect(() => {
     let rafId: number;
@@ -105,7 +115,7 @@ export default function HomePage() {
                       className="w-full bg-gray-50 border-none h-10 pl-4 pr-4 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-orange-500/20 outline-none"
                     />
 
-                    {showRecommendations && recommendations.length > 0 && (
+                    {showRecommendations && (recommendations.length > 0 || postcodeMatch) && (
                       <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50 max-h-60 overflow-y-auto">
                         {recommendations.map((rec) => (
                           <Link
@@ -123,6 +133,21 @@ export default function HomePage() {
                             </div>
                           </Link>
                         ))}
+                        {postcodeMatch && (
+                          <Link
+                            href={`/towns/${postcodeMatch.slug}`}
+                            onClick={() => setShowNavSearch(false)}
+                            className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-t border-gray-50"
+                          >
+                            <MapPin className="h-4 w-4 text-orange-500" />
+                            <div>
+                              <div className="font-bold text-gray-900 text-xs">{postcodeMatch.label}</div>
+                              <div className="text-[8px] font-black text-gray-400 uppercase tracking-widest">
+                                UK Postcode Area
+                              </div>
+                            </div>
+                          </Link>
+                        )}
                       </div>
                     )}
                   </div>
@@ -291,6 +316,23 @@ export default function HomePage() {
                 </span>
               </div>
             </div>
+
+            {postcodeMatch && (
+              <div className="mb-8">
+                <Link href={`/towns/${postcodeMatch.slug}`} className="group block">
+                  <div className="flex items-center gap-4 bg-orange-50 border border-orange-100 rounded-[2rem] px-8 py-6 hover:bg-orange-100 transition-colors">
+                    <div className="bg-orange-500 rounded-xl p-3 shrink-0">
+                      <MapPin className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-1">UK Postcode Area</div>
+                      <div className="text-xl font-black text-gray-900 tracking-tighter uppercase">{postcodeMatch.label}</div>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-orange-400 group-hover:translate-x-1 transition-transform shrink-0" />
+                  </div>
+                </Link>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {displayedTowns.map((town) => (

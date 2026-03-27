@@ -11,12 +11,22 @@ import { Logo } from '@/components/layout/Logo';
 import { Footer } from '@/components/layout/Footer';
 import { searchTowns } from '@/services/town.service';
 import { PRICES, TOWNS_PER_PAGE_SHOP } from '@/constants';
+import { isUKPostcode, postcodeToSlug } from '@/lib/postcode';
 
 export default function ShopPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
 
   const towns = useMemo(() => searchTowns(searchQuery), [searchQuery]);
+
+  const postcodeMatch = useMemo(() => {
+    if (!searchQuery) return null;
+    const q = searchQuery.trim();
+    if (isUKPostcode(q)) {
+      return { slug: postcodeToSlug(q), label: q.toUpperCase() };
+    }
+    return null;
+  }, [searchQuery]);
 
   const totalPages = Math.ceil(towns.length / TOWNS_PER_PAGE_SHOP);
   const displayedTowns = towns.slice(
@@ -94,6 +104,23 @@ export default function ShopPage() {
                 ))}
               </div>
             </div>
+
+            {postcodeMatch && (
+              <div className="mb-8">
+                <Link href={`/towns/${postcodeMatch.slug}`} className="group block">
+                  <div className="flex items-center gap-4 bg-orange-50 border border-orange-100 rounded-[2rem] px-8 py-6 hover:bg-orange-100 transition-colors">
+                    <div className="bg-orange-500 rounded-xl p-3 shrink-0">
+                      <MapPin className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-1">UK Postcode Area</div>
+                      <div className="text-xl font-black text-gray-900 tracking-tighter uppercase">{postcodeMatch.label}</div>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-orange-400 group-hover:translate-x-1 transition-transform shrink-0" />
+                  </div>
+                </Link>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {displayedTowns.map((town) => (

@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/Footer';
 import { getTownById, getStaticTownParams } from '@/services/town.service';
 import { PRICES } from '@/constants';
 import type { Product } from '@/types';
+import { mightBePostcodeSlug, slugToPostcode, lookupPostcode, postcodeResultToTownDetail } from '@/lib/postcode';
 
 interface Props {
   params: Promise<{ town: string }>;
@@ -19,7 +20,15 @@ export async function generateStaticParams() {
 
 export default async function TownPage({ params }: Props) {
   const { town } = await params;
-  const townData = getTownById(town);
+  let townData = getTownById(town);
+
+  if (!townData && mightBePostcodeSlug(town)) {
+    const postcode = slugToPostcode(town);
+    const result = await lookupPostcode(postcode);
+    if (result) {
+      townData = postcodeResultToTownDetail(result);
+    }
+  }
 
   if (!townData) {
     notFound();
@@ -85,9 +94,7 @@ export default async function TownPage({ params }: Props) {
             </h1>
             <p className="text-xl text-gray-500 font-medium leading-relaxed">
               Premium Smartwhips available for immediate delivery across {townData.city} (
-              {townData.admin_name}). With a local population of{' '}
-              {Number(townData.population).toLocaleString()}, we maintain high stock levels for
-              rapid drops.
+              {townData.admin_name}).{Number(townData.population) > 0 ? ` With a local population of ${Number(townData.population).toLocaleString()}, we maintain high stock levels for rapid drops.` : ' We maintain high stock levels for rapid drops across this area.'} 
             </p>
           </div>
         </div>
@@ -188,10 +195,10 @@ export default async function TownPage({ params }: Props) {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                 <div className="text-3xl font-black text-orange-500 mb-1 leading-none">
-                  {Number(townData.population).toLocaleString()}
+                  {Number(townData.population) > 0 ? Number(townData.population).toLocaleString() : 'UK'}
                 </div>
                 <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  Local Population
+                  {Number(townData.population) > 0 ? 'Local Population' : 'Coverage Area'}
                 </div>
               </div>
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">

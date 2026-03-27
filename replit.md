@@ -37,6 +37,7 @@ services/                   # Business logic and external API clients
 
 lib/                        # Core utilities and infrastructure
   auth.ts                   # Password hashing / comparison (bcryptjs)
+  postcode.ts               # UK postcode utilities: detection, slug conversion, postcodes.io lookup
   seo.ts                    # JSON-LD builders and metadata helpers (buildTownMetadata, buildTownProductJsonLd, buildTownFaqJsonLd)
   utils.ts                  # Tailwind class merger (cn)
   db/
@@ -74,7 +75,8 @@ middleware.ts               # Security headers for all routes
 ### SEO Strategy
 - `generateStaticParams` in `towns/[town]/page.tsx` pre-renders a page per UK town
 - Each town page has dynamic `generateMetadata`, JSON-LD Product + FAQ schema
-- `app/sitemap.ts` generates the full sitemap automatically
+- `app/sitemap.ts` generates the full sitemap automatically (static towns only)
+- Postcode-based pages are dynamically server-rendered via postcodes.io API and are NOT included in the sitemap
 
 ### Data Storage
 - **Database**: PostgreSQL

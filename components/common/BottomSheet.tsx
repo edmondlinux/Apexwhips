@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, X, MapPin } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { BOTTOM_SHEET_SCROLL_THRESHOLD, BOTTOM_SHEET_RESULTS_LIMIT } from '@/constants';
 import { searchTownsSuggestions } from '@/services/town.service';
+import { isUKPostcode, postcodeToSlug } from '@/lib/postcode';
 import Link from 'next/link';
 
 export function BottomSheet() {
@@ -32,6 +33,15 @@ export function BottomSheet() {
     () => searchTownsSuggestions(search, BOTTOM_SHEET_RESULTS_LIMIT),
     [search]
   );
+
+  const postcodeMatch = useMemo(() => {
+    if (!search) return null;
+    const q = search.trim();
+    if (isUKPostcode(q)) {
+      return { slug: postcodeToSlug(q), label: q.toUpperCase() };
+    }
+    return null;
+  }, [search]);
 
   if (!isOpen && !hasScrolled) return null;
 
@@ -77,6 +87,19 @@ export function BottomSheet() {
 
         {search && (
           <div className="mt-4 max-h-[40vh] overflow-y-auto divide-y divide-gray-50 bg-gray-50 rounded-xl">
+            {postcodeMatch && (
+              <Link
+                href={`/towns/${postcodeMatch.slug}`}
+                className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <MapPin className="h-4 w-4 text-orange-500 shrink-0" />
+                <div>
+                  <span className="text-sm font-bold text-gray-900">{postcodeMatch.label}</span>
+                  <span className="block text-[10px] font-black text-orange-400 uppercase tracking-widest">UK Postcode Area</span>
+                </div>
+              </Link>
+            )}
             {filteredTowns.length > 0 ? (
               filteredTowns.map((town) => (
                 <Link
@@ -88,11 +111,11 @@ export function BottomSheet() {
                   <span className="text-sm font-medium text-gray-900">{town.name}</span>
                 </Link>
               ))
-            ) : (
+            ) : !postcodeMatch ? (
               <div className="px-4 py-3 text-sm text-gray-500 text-center">
                 No towns found matching &quot;{search}&quot;
               </div>
-            )}
+            ) : null}
           </div>
         )}
       </div>
