@@ -11,7 +11,8 @@ import { Logo } from '@/components/layout/Logo';
 import { Footer } from '@/components/layout/Footer';
 import { searchTowns } from '@/services/town.service';
 import { PRICES, TOWNS_PER_PAGE_SHOP } from '@/constants';
-import { isUKPostcode, postcodeToSlug } from '@/lib/postcode';
+import { isUKPostcode, postcodeToSlug, placeToSlug } from '@/lib/postcode';
+import { useUKPlacesSearch } from '@/hooks/useUKPlacesSearch';
 
 export default function ShopPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,6 +28,8 @@ export default function ShopPage() {
     }
     return null;
   }, [searchQuery]);
+
+  const { places: apiPlaces } = useUKPlacesSearch(postcodeMatch ? '' : searchQuery);
 
   const totalPages = Math.ceil(towns.length / TOWNS_PER_PAGE_SHOP);
   const displayedTowns = towns.slice(
@@ -119,6 +122,25 @@ export default function ShopPage() {
                     <ChevronRight className="h-5 w-5 text-orange-400 group-hover:translate-x-1 transition-transform shrink-0" />
                   </div>
                 </Link>
+              </div>
+            )}
+
+            {apiPlaces.length > 0 && !postcodeMatch && (
+              <div className="mb-8 space-y-3">
+                {apiPlaces.map((place) => (
+                  <Link key={place.code} href={`/towns/${placeToSlug(place)}`} className="group block">
+                    <div className="flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-[2rem] px-8 py-5 hover:bg-orange-50 hover:border-orange-100 transition-colors">
+                      <div className="bg-gray-200 group-hover:bg-orange-500 rounded-xl p-3 shrink-0 transition-colors">
+                        <MapPin className="h-5 w-5 text-gray-500 group-hover:text-white transition-colors" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{place.county_unitary || place.region}</div>
+                        <div className="text-lg font-black text-gray-900 tracking-tighter uppercase">{place.name_1}</div>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-400 group-hover:translate-x-1 transition-all shrink-0" />
+                    </div>
+                  </Link>
+                ))}
               </div>
             )}
 

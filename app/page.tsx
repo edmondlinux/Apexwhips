@@ -11,7 +11,8 @@ import { Footer } from '@/components/layout/Footer';
 import { getAllTowns, getTownRecommendations } from '@/services/town.service';
 import { PRICES, TOWNS_PER_PAGE_HOME } from '@/constants';
 import type { Town } from '@/types';
-import { isUKPostcode, postcodeToSlug } from '@/lib/postcode';
+import { isUKPostcode, postcodeToSlug, placeToSlug } from '@/lib/postcode';
+import { useUKPlacesSearch } from '@/hooks/useUKPlacesSearch';
 
 export default function HomePage() {
   const [visibleTowns, setVisibleTowns] = useState(TOWNS_PER_PAGE_HOME);
@@ -42,6 +43,10 @@ export default function HomePage() {
     }
     return null;
   }, [searchQuery]);
+
+  const { places: apiPlaces, isLoading: placesLoading } = useUKPlacesSearch(
+    postcodeMatch ? '' : searchQuery
+  );
 
   useEffect(() => {
     let rafId: number;
@@ -115,8 +120,8 @@ export default function HomePage() {
                       className="w-full bg-gray-50 border-none h-10 pl-4 pr-4 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-orange-500/20 outline-none"
                     />
 
-                    {showRecommendations && (recommendations.length > 0 || postcodeMatch) && (
-                      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50 max-h-60 overflow-y-auto">
+                    {showRecommendations && (recommendations.length > 0 || postcodeMatch || apiPlaces.length > 0 || placesLoading) && (
+                      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50 max-h-72 overflow-y-auto">
                         {recommendations.map((rec) => (
                           <Link
                             key={rec.id}
@@ -133,6 +138,25 @@ export default function HomePage() {
                             </div>
                           </Link>
                         ))}
+                        {apiPlaces.map((place) => (
+                          <Link
+                            key={place.code}
+                            href={`/towns/${placeToSlug(place)}`}
+                            onClick={() => setShowNavSearch(false)}
+                            className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0"
+                          >
+                            <MapPin className="h-4 w-4 text-orange-400" />
+                            <div>
+                              <div className="font-bold text-gray-900 text-xs">{place.name_1}</div>
+                              <div className="text-[8px] font-black text-gray-400 uppercase tracking-widest">
+                                {place.county_unitary || place.region}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                        {placesLoading && recommendations.length === 0 && (
+                          <div className="px-4 py-3 text-xs text-gray-400 text-center">Searching UK locations...</div>
+                        )}
                         {postcodeMatch && (
                           <Link
                             href={`/towns/${postcodeMatch.slug}`}
@@ -331,6 +355,25 @@ export default function HomePage() {
                     <ChevronRight className="h-5 w-5 text-orange-400 group-hover:translate-x-1 transition-transform shrink-0" />
                   </div>
                 </Link>
+              </div>
+            )}
+
+            {apiPlaces.length > 0 && !postcodeMatch && (
+              <div className="mb-8 space-y-3">
+                {apiPlaces.map((place) => (
+                  <Link key={place.code} href={`/towns/${placeToSlug(place)}`} className="group block">
+                    <div className="flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-[2rem] px-8 py-5 hover:bg-orange-50 hover:border-orange-100 transition-colors">
+                      <div className="bg-gray-200 group-hover:bg-orange-500 rounded-xl p-3 shrink-0 transition-colors">
+                        <MapPin className="h-5 w-5 text-gray-500 group-hover:text-white transition-colors" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{place.county_unitary || place.region}</div>
+                        <div className="text-lg font-black text-gray-900 tracking-tighter uppercase">{place.name_1}</div>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-400 group-hover:translate-x-1 transition-all shrink-0" />
+                    </div>
+                  </Link>
+                ))}
               </div>
             )}
 

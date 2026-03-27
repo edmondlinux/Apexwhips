@@ -8,7 +8,7 @@ import { Footer } from '@/components/layout/Footer';
 import { getTownById, getStaticTownParams } from '@/services/town.service';
 import { PRICES } from '@/constants';
 import type { Product } from '@/types';
-import { mightBePostcodeSlug, slugToPostcode, lookupPostcode, postcodeResultToTownDetail } from '@/lib/postcode';
+import { mightBePostcodeSlug, slugToPostcode, lookupPostcode, postcodeResultToTownDetail, lookupPlaceBySlug, placeResultToTownDetail } from '@/lib/postcode';
 
 interface Props {
   params: Promise<{ town: string }>;
@@ -27,6 +27,13 @@ export default async function TownPage({ params }: Props) {
     const result = await lookupPostcode(postcode);
     if (result) {
       townData = postcodeResultToTownDetail(result);
+    }
+  }
+
+  if (!townData) {
+    const placeResult = await lookupPlaceBySlug(town);
+    if (placeResult) {
+      townData = placeResultToTownDetail(placeResult);
     }
   }
 

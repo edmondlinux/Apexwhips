@@ -9,6 +9,17 @@ export interface PostcodeResult {
   country: string;
 }
 
+export interface PlaceResult {
+  code: string;
+  name_1: string;
+  county_unitary: string | null;
+  region: string;
+  country: string;
+  longitude: number;
+  latitude: number;
+  local_type: string;
+}
+
 const UK_POSTCODE_REGEX = /^[A-Z]{1,2}[0-9][0-9A-Z]?\s*[0-9][A-Z]{2}$/i;
 
 export function isUKPostcode(query: string): boolean {
@@ -32,6 +43,10 @@ export function mightBePostcodeSlug(slug: string): boolean {
   return isUKPostcode(reconstructed);
 }
 
+export function placeToSlug(place: PlaceResult): string {
+  return place.name_1.toLowerCase().replace(/\s+/g, '-');
+}
+
 export async function lookupPostcode(postcode: string): Promise<PostcodeResult | null> {
   try {
     const res = await fetch(
@@ -47,10 +62,44 @@ export async function lookupPostcode(postcode: string): Promise<PostcodeResult |
   }
 }
 
+export async function searchUKPlaces(query: string, limit = 8): Promise<PlaceResult[]> {
+  if (!query || query.trim().length < 2) return [];
+  try {
+    const res = await fetch(
+      `https://api.postcodes.io/places?q=${encodeURIComponent(query.trim())}&limit=${limit}`,
+      { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    if (data.status === 200 && Array.isArray(data.result)) return data.result as PlaceResult[];
+    return [];
+  } catch {
+    return [];
+  }
+}
+
+export async function lookupPlaceBySlug(slug: string): Promise<PlaceResult | null> {
+  const query = slug.replace(/-/g, ' ');
+  const results = await searchUKPlaces(query, 1);
+  if (results.length === 0) return null;
+  return results[0];
+}
+
 export function postcodeResultToTownDetail(result: PostcodeResult) {
   return {
     city: result.admin_district || result.parish || result.postcode,
     admin_name: result.admin_county || result.region || 'United Kingdom',
+    lat: String(result.latitude),
+    lng: String(result.longitude),
+    population: '0',
+    iso2: 'GB',
+  };
+}
+
+export function placeResultToTownDetail(result: PlaceResult) {
+  return {
+    city: result.name_1,
+    admin_name: result.county_unitary || result.region || 'United Kingdom',
     lat: String(result.latitude),
     lng: String(result.longitude),
     population: '0',

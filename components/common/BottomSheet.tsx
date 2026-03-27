@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { BOTTOM_SHEET_SCROLL_THRESHOLD, BOTTOM_SHEET_RESULTS_LIMIT } from '@/constants';
 import { searchTownsSuggestions } from '@/services/town.service';
-import { isUKPostcode, postcodeToSlug } from '@/lib/postcode';
+import { isUKPostcode, postcodeToSlug, placeToSlug } from '@/lib/postcode';
+import { useUKPlacesSearch } from '@/hooks/useUKPlacesSearch';
 import Link from 'next/link';
 
 export function BottomSheet() {
@@ -42,6 +43,8 @@ export function BottomSheet() {
     }
     return null;
   }, [search]);
+
+  const { places: apiPlaces } = useUKPlacesSearch(postcodeMatch ? '' : search);
 
   if (!isOpen && !hasScrolled) return null;
 
@@ -100,22 +103,35 @@ export function BottomSheet() {
                 </div>
               </Link>
             )}
-            {filteredTowns.length > 0 ? (
-              filteredTowns.map((town) => (
-                <Link
-                  key={town.id}
-                  href={`/towns/${town.id}`}
-                  className="flex items-center px-4 py-3 hover:bg-gray-100 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span className="text-sm font-medium text-gray-900">{town.name}</span>
-                </Link>
-              ))
-            ) : !postcodeMatch ? (
+            {filteredTowns.map((town) => (
+              <Link
+                key={town.id}
+                href={`/towns/${town.id}`}
+                className="flex items-center px-4 py-3 hover:bg-gray-100 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <span className="text-sm font-medium text-gray-900">{town.name}</span>
+              </Link>
+            ))}
+            {apiPlaces.map((place) => (
+              <Link
+                key={place.code}
+                href={`/towns/${placeToSlug(place)}`}
+                className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <MapPin className="h-4 w-4 text-orange-400 shrink-0" />
+                <div>
+                  <span className="text-sm font-medium text-gray-900">{place.name_1}</span>
+                  <span className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">{place.county_unitary || place.region}</span>
+                </div>
+              </Link>
+            ))}
+            {filteredTowns.length === 0 && apiPlaces.length === 0 && !postcodeMatch && (
               <div className="px-4 py-3 text-sm text-gray-500 text-center">
                 No towns found matching &quot;{search}&quot;
               </div>
-            ) : null}
+            )}
           </div>
         )}
       </div>
