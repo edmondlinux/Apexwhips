@@ -131,8 +131,8 @@ export function buildTownMetadata(townData: TownDetail, townSlug: string) {
       `smartwhip Near ${cityName}`,
     ],
     openGraph: {
-      title: `Smartwhip in ${cityName} | Apexwhips.com`,
-      description: `Fast delivery of Smartwhip and FastGas in ${cityName}.`,
+      title: `Buy Smartwhip in ${cityName} | Fast Delivery | Order via WhatsApp or Telegram`,
+      description: `Do you need Smartwhip fast? Look no further — order from ApexWhips for just £30 and have it delivered in under 30 mins in ${cityName}.`,
       images: ['/og_image/og_image.jpeg'],
     },
     twitter: {
