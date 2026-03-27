@@ -12,22 +12,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  title: 'SmartWhip UK | Buy Smartwhips, FastGas & Cream Deluxe | Rapid Delivery',
+  title: 'SmartWhip UK | Buy Smartwhip, FastGas & Cream Deluxe | 25 mins Delivery',
   description:
-    "The UK's #1 supplier for SmartWhip, FastGas, and Cream Deluxe cylinders. Get premium 640g,2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.",
+    "Buy Smartwhip, FastGas & Cream Deluxe 640g and 2kg N2O Canisters with fast same-day delivery across the UK. Wholesale prices on bulk orders. Same-day delivery in Bristol, Manchester, Coventry & more. Buy now",
   keywords: [
     'SmartWhip UK',
     'Buy SmartWhips online',
     'SmartWhip 640g',
     'FastGas cylinders',
-    'Cream Deluxe chargers',
     'Nitrous Oxide UK',
     'Cream chargers near me',
-    'SmartWhip wholesale',
-    'Fastgas UK',
-    'Cream Deluxe UK',
+    'Smartwhip wholesale',
+    'smart whip',
     'baloons UK',
-    'baloons near me',
+    'smartwhip near me',
     'ApexWhips',
     'apexwhips',
   ],
@@ -47,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ApexWhips - Premium SmartWhips UK| apexwhips',
     description:
-      'Fast delivery of Smartwhip, FastGas, and Cream Deluxe canisters. Buy premium 640g, 2kg N2O cream chargers delivered in under 25 minutes. Best wholesale prices guaranteed.',
+      'Buy Smartwhip, FastGas & Cream Deluxe 640g and 2kg N2O Canisters with fast same-day delivery across the UK. Wholesale prices on bulk orders. Same-day delivery in Bristol, Manchester, Coventry & more. Buy now',
     type: 'website',
     url: baseUrl,
     images: [
