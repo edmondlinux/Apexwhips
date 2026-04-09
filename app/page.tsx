@@ -155,7 +155,7 @@ export default function HomePage() {
                           </Link>
                         ))}
                         {placesLoading && recommendations.length === 0 && (
-                          <div className="px-4 py-3 text-xs text-gray-400 text-center">Searching UK locations...</div>
+                          <div className="px-4 py-3 text-xs text-gray-400 text-center">Searching UK and Ireland locations...</div>
                         )}
                         {postcodeMatch && (
                           <Link
@@ -167,7 +167,7 @@ export default function HomePage() {
                             <div>
                               <div className="font-bold text-gray-900 text-xs">{postcodeMatch.label}</div>
                               <div className="text-[8px] font-black text-gray-400 uppercase tracking-widest">
-                                UK Postcode Area
+                                UK and Ireland Postcode Area
                               </div>
                             </div>
                           </Link>
@@ -213,7 +213,7 @@ export default function HomePage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500" />
                 </span>
-                UK-Wide Dispatch Active
+                UK and Ireland Dispatch Active
               </div>
               <h1 className="text-6xl md:text-8xl font-black text-gray-900 tracking-tight leading-[0.9] mb-8">
                 <div className="flex justify-center mb-8">
@@ -226,7 +226,7 @@ export default function HomePage() {
                   >
                     <Image
                       src="/logo/logo.jpeg"
-                      alt="ApexWhips - Premier SmartWhip UK Supplier"
+                      alt="ApexWhips - Premier SmartWhip UK and Ireland Supplier"
                       width={200}
                       height={200}
                       className="rounded-3xl shadow-2xl"
@@ -235,11 +235,11 @@ export default function HomePage() {
                   </div>
                 </div>
                 PREMIUM <br />
-                <span className="text-orange-500 italic">SMARTWHIPS UK</span>
+                <span className="text-orange-500 italic">SMARTWHIPS UK & IRELAND</span>
               </h1>
               <p className="text-xl text-gray-500 font-medium leading-relaxed mb-12">
                 Order high-quality SmartWhip cylinders and FastGas cream chargers for rapid
-                delivery. We are the UK&apos;s leading wholesale and retail supplier of N2O cream
+                delivery. We are the UK and Ireland&apos;s leading wholesale and retail supplier of N2O cream
                 chargers, offering local dispatch in under 25 minutes.
               </p>
             </div>
@@ -274,7 +274,7 @@ export default function HomePage() {
                 <p className="text-gray-600 mb-6">
                   In addition to the original SmartWhip, we stock premium brands like FastGas and
                   Cream Deluxe. Whether you need single canisters or wholesale pallets, ApexWhips
-                  guarantees the best pricing in the UK.
+                  guarantees the best pricing in the UK and Ireland.
                 </p>
                 <div className="flex gap-4">
                   <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex-1 text-center">
@@ -336,7 +336,7 @@ export default function HomePage() {
               </div>
               <div className="text-right">
                 <span className="text-5xl font-black text-orange-500/10 tracking-tighter leading-none select-none">
-                  UK NETWORK
+                  UK & IRELAND NETWORK
                 </span>
               </div>
             </div>
@@ -349,7 +349,7 @@ export default function HomePage() {
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-1">UK Postcode Area</div>
+                      <div className="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-1">UK and Ireland Postcode Area</div>
                       <div className="text-xl font-black text-gray-900 tracking-tighter uppercase">{postcodeMatch.label}</div>
                     </div>
                     <ChevronRight className="h-5 w-5 text-orange-400 group-hover:translate-x-1 transition-transform shrink-0" />
