@@ -1,4 +1,4 @@
-import { FloatingActionButtons } from '@/components/common/FloatingActionButtons';
+import { FloatingBottomNav } from '@/components/common/FloatingBottomNav';
 import { BottomSheet } from '@/components/common/BottomSheet';
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
@@ -106,7 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }),
           }}
         />
-        <FloatingActionButtons />
+        <FloatingBottomNav />
         <BottomSheet />
       </body>
     </html>
