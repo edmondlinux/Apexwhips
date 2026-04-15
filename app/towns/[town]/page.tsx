@@ -31,9 +31,6 @@ import {
   placeResultToTownDetail,
 } from '@/lib/postcode';
 import { getWikipediaSummary, truncateExtract } from '@/lib/wikipedia';
-import { CheckoutFlow } from '@/components/checkout/CheckoutFlow';
-
-const IS_NEW_CHECKOUT = process.env.NODE_ENV === 'development';
 
 interface Props {
   params: Promise<{ town: string }>;
@@ -236,12 +233,6 @@ export default async function TownPage({ params }: Props) {
         )}
 
         {/* ── PRODUCTS ── */}
-        {IS_NEW_CHECKOUT ? (
-          <CheckoutFlow
-            city={townData.city}
-            whatsappUrl={process.env.NEXT_PUBLIC_WHATSAPP_URL || '#'}
-          />
-        ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           {products.map((product) => (
             <Card
@@ -314,7 +305,6 @@ export default async function TownPage({ params }: Props) {
             </Card>
           ))}
         </div>
-        )}
 
         {/* ── SERVING SECTION ── */}
         <section className="bg-gray-50 rounded-[3rem] p-12 md:p-20 mb-20 border border-gray-100">

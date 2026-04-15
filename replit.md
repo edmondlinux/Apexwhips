@@ -30,8 +30,6 @@ components/
   common/                   # Reusable domain components
     BottomSheet.tsx         # Scroll-triggered town search overlay
     FloatingActionButtons.tsx # Fixed WhatsApp / Telegram buttons
-  checkout/                 # New checkout flow (dev-only feature flag)
-    CheckoutFlow.tsx        # Brand selection → location bottom sheet → bank transfer → upload → WhatsApp
 
 services/                   # Business logic and external API clients
   town.service.ts           # All town data access (getAllTowns, getTownById, search, etc.)
@@ -92,15 +90,8 @@ middleware.ts               # Security headers for all routes
 - Sessions: HTTP-only cookies
 
 ### Ordering Flow
-- **Production**: "Order Now" buttons link directly to WhatsApp / Telegram
-- **Development (new checkout — feature-flagged)**: Full in-page checkout flow via `components/checkout/CheckoutFlow.tsx`
-  - Brand selection: Smartwhip, Cream Deluxe, FastGas
-  - Pricing: £30/unit, £130/box (balloons included)
-  - Location entry → bottom sheet with OpenStreetMap embed + ETA (20–25 min)
-  - Bank transfer checkout with account details
-  - Payment proof screenshot upload
-  - Auto-redirect to WhatsApp after confirmation
-- Feature gate: `IS_NEW_CHECKOUT = process.env.NODE_ENV === 'development'` in `app/towns/[town]/page.tsx`
+- No traditional checkout — "Order Now" buttons link to WhatsApp / Telegram
+- URLs supplied via `NEXT_PUBLIC_WHATSAPP_URL` and `NEXT_PUBLIC_TELEGRAM_URL` env vars
 
 ## Environment Variables Required
 - `NEXT_PUBLIC_WHATSAPP_URL`: WhatsApp order link
@@ -110,9 +101,6 @@ middleware.ts               # Security headers for all routes
 - `STRIPE_SECRET_KEY`: Stripe API secret key
 - `STRIPE_WEBHOOK_SECRET`: Stripe webhook signing secret
 - `AUTH_SECRET`: JWT signing secret
-- `NEXT_PUBLIC_BANK_ACCOUNT_NAME`: Bank account name shown in checkout (default: ApexWhips Ltd)
-- `NEXT_PUBLIC_BANK_SORT_CODE`: Sort code shown in checkout (default: 00-00-00)
-- `NEXT_PUBLIC_BANK_ACCOUNT_NUMBER`: Account number shown in checkout (default: 00000000)
 
 ## NPM Scripts
 - `npm run dev`: Start development server (Turbopack, port 5000)
