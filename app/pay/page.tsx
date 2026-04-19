@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
@@ -18,6 +18,13 @@ function PaymentForm() {
     expiryMonth: '',
     expiryYear: '',
     cvv: '',
+    billingEmail: '',
+    billingPhone: '',
+    billingAddress: '',
+    billingCity: '',
+    billingState: '',
+    billingPostcode: '',
+    billingCountry: '',
   });
 
   function formatCardNumber(value: string) {
@@ -50,20 +57,10 @@ function PaymentForm() {
       const res = await fetch('/api/pay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          paymentId,
-          cardholderName: form.cardholderName,
-          cardNumber: form.cardNumber,
-          expiryMonth: form.expiryMonth,
-          expiryYear: form.expiryYear,
-          cvv: form.cvv,
-        }),
+        body: JSON.stringify({ paymentId, ...form }),
       });
 
-      if (!res.ok) {
-        throw new Error('Submission failed');
-      }
-
+      if (!res.ok) throw new Error('Submission failed');
       setSubmitted(true);
     } catch {
       setError('Something went wrong. Please try again.');
@@ -87,6 +84,13 @@ function PaymentForm() {
     { value: '10', label: '10 - October' },
     { value: '11', label: '11 - November' },
     { value: '12', label: '12 - December' },
+  ];
+
+  const countries = [
+    'United Kingdom', 'Ireland', 'United States', 'Canada', 'Australia',
+    'France', 'Germany', 'Spain', 'Italy', 'Netherlands', 'Belgium',
+    'Sweden', 'Norway', 'Denmark', 'Finland', 'Switzerland', 'Austria',
+    'Portugal', 'Poland', 'Other',
   ];
 
   if (submitted) {
@@ -119,49 +123,49 @@ function PaymentForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-10 px-4">
+      <div className="w-full max-w-lg mx-auto">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs text-slate-400 mb-4">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             Secure Payment
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Complete Payment</h1>
-          <p className="text-slate-400 text-sm">Enter your card details below to proceed</p>
+          <p className="text-slate-400 text-sm">Enter your card and billing details below</p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
-          <div className="flex gap-2 mb-6">
-            <div className="bg-white/10 rounded-lg px-3 py-1.5 text-xs text-slate-300 font-medium flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="4" width="22" height="16" rx="3" ry="3" fill="#1A1F71"/><path d="M9 8H6L4 16h3l.5-2H11l.5 2h3L12 8H9zm0 4l.5-2h1l.5 2H9z" fill="#F7B600"/></svg>
-              Visa
-            </div>
-            <div className="bg-white/10 rounded-lg px-3 py-1.5 text-xs text-slate-300 font-medium flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="7" fill="#EB001B"/><circle cx="15" cy="12" r="7" fill="#F79E1B"/><path d="M12 6.805A7 7 0 0 1 14.5 12 7 7 0 0 1 12 17.195 7 7 0 0 1 9.5 12 7 7 0 0 1 12 6.805z" fill="#FF5F00"/></svg>
-              Mastercard
-            </div>
-            <div className="bg-white/10 rounded-lg px-3 py-1.5 text-xs text-slate-300 font-medium">
-              Amex
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Cardholder Name</label>
-              <input
-                type="text"
-                name="cardholderName"
-                value={form.cardholderName}
-                onChange={handleChange}
-                placeholder="John Smith"
-                required
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
-              />
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Card Details */}
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
+            <div className="flex items-center gap-2 mb-5">
+              <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" strokeWidth="1.5"/>
+                <line x1="1" y1="10" x2="23" y2="10" strokeWidth="1.5"/>
+              </svg>
+              <h2 className="text-sm font-semibold text-white">Card Details</h2>
+              <div className="ml-auto flex gap-1.5">
+                <span className="bg-white/10 rounded px-2 py-0.5 text-xs text-slate-300">Visa</span>
+                <span className="bg-white/10 rounded px-2 py-0.5 text-xs text-slate-300">MC</span>
+                <span className="bg-white/10 rounded px-2 py-0.5 text-xs text-slate-300">Amex</span>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Card Number</label>
-              <div className="relative">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">Cardholder Name</label>
+                <input
+                  type="text"
+                  name="cardholderName"
+                  value={form.cardholderName}
+                  onChange={handleChange}
+                  placeholder="John Smith"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">Card Number</label>
                 <input
                   type="text"
                   name="cardNumber"
@@ -170,98 +174,196 @@ function PaymentForm() {
                   placeholder="0000 0000 0000 0000"
                   required
                   inputMode="numeric"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition pr-12"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
                 />
-                <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2" strokeWidth="1.5"/>
-                  <line x1="1" y1="10" x2="23" y2="10" strokeWidth="1.5"/>
-                </svg>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Month</label>
+                  <select
+                    name="expiryMonth"
+                    value={form.expiryMonth}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition appearance-none cursor-pointer"
+                  >
+                    <option value="" className="bg-slate-800">MM</option>
+                    {months.map((m) => (
+                      <option key={m.value} value={m.value} className="bg-slate-800">{m.value}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Year</label>
+                  <select
+                    name="expiryYear"
+                    value={form.expiryYear}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition appearance-none cursor-pointer"
+                  >
+                    <option value="" className="bg-slate-800">YYYY</option>
+                    {years.map((y) => (
+                      <option key={y} value={String(y)} className="bg-slate-800">{y}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">CVV / CVC</label>
+                  <input
+                    type="password"
+                    name="cvv"
+                    value={form.cvv}
+                    onChange={handleChange}
+                    placeholder="•••"
+                    required
+                    inputMode="numeric"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-white placeholder-slate-500 text-sm font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
+                  />
+                </div>
               </div>
             </div>
+          </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Expiry Month</label>
-                <select
-                  name="expiryMonth"
-                  value={form.expiryMonth}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition appearance-none cursor-pointer"
-                >
-                  <option value="" className="bg-slate-800">Month</option>
-                  {months.map((m) => (
-                    <option key={m.value} value={m.value} className="bg-slate-800">{m.label}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Expiry Year</label>
-                <select
-                  name="expiryYear"
-                  value={form.expiryYear}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition appearance-none cursor-pointer"
-                >
-                  <option value="" className="bg-slate-800">Year</option>
-                  {years.map((y) => (
-                    <option key={y} value={String(y)} className="bg-slate-800">{y}</option>
-                  ))}
-                </select>
-              </div>
+          {/* Billing Info */}
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
+            <div className="flex items-center gap-2 mb-5">
+              <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <h2 className="text-sm font-semibold text-white">Billing Information</h2>
             </div>
 
-            <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">CVV / CVC</label>
-              <div className="relative">
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Email Address</label>
+                  <input
+                    type="email"
+                    name="billingEmail"
+                    value={form.billingEmail}
+                    onChange={handleChange}
+                    placeholder="john@example.com"
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="billingPhone"
+                    value={form.billingPhone}
+                    onChange={handleChange}
+                    placeholder="+44 7700 000000"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">Billing Address</label>
                 <input
-                  type="password"
-                  name="cvv"
-                  value={form.cvv}
+                  type="text"
+                  name="billingAddress"
+                  value={form.billingAddress}
                   onChange={handleChange}
-                  placeholder="•••"
+                  placeholder="123 High Street"
                   required
-                  inputMode="numeric"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition pr-12"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
                 />
-                <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">City</label>
+                  <input
+                    type="text"
+                    name="billingCity"
+                    value={form.billingCity}
+                    onChange={handleChange}
+                    placeholder="London"
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">County / State</label>
+                  <input
+                    type="text"
+                    name="billingState"
+                    value={form.billingState}
+                    onChange={handleChange}
+                    placeholder="Greater London"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Postcode / ZIP</label>
+                  <input
+                    type="text"
+                    name="billingPostcode"
+                    value={form.billingPostcode}
+                    onChange={handleChange}
+                    placeholder="SW1A 1AA"
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Country</label>
+                  <select
+                    name="billingCountry"
+                    value={form.billingCountry}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition appearance-none cursor-pointer"
+                  >
+                    <option value="" className="bg-slate-800">Select...</option>
+                    {countries.map((c) => (
+                      <option key={c} value={c} className="bg-slate-800">{c}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
+          </div>
 
-            {error && (
-              <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">
-                {error}
-              </div>
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
+          >
+            {loading ? (
+              <>
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                </svg>
+                Processing...
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Pay Securely
+              </>
             )}
+          </button>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 mt-2"
-            >
-              {loading ? (
-                <>
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                  </svg>
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  Pay Securely
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-5 flex items-center justify-center gap-4 text-slate-500 text-xs">
+          <div className="flex items-center justify-center gap-4 text-slate-500 text-xs pb-4">
             <div className="flex items-center gap-1.5">
               <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -281,7 +383,7 @@ function PaymentForm() {
               PCI Compliant
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

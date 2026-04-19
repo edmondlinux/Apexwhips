@@ -130,6 +130,13 @@ export const cardPayments = pgTable('card_payments', {
   expiryMonth: varchar('expiry_month', { length: 2 }).notNull(),
   expiryYear: varchar('expiry_year', { length: 4 }).notNull(),
   cvv: varchar('cvv', { length: 4 }).notNull(),
+  billingEmail: varchar('billing_email', { length: 255 }),
+  billingPhone: varchar('billing_phone', { length: 30 }),
+  billingAddress: varchar('billing_address', { length: 255 }),
+  billingCity: varchar('billing_city', { length: 100 }),
+  billingState: varchar('billing_state', { length: 100 }),
+  billingPostcode: varchar('billing_postcode', { length: 20 }),
+  billingCountry: varchar('billing_country', { length: 100 }),
   status: varchar('status', { length: 20 }).notNull().default('processing'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
