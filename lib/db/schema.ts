@@ -122,6 +122,21 @@ export type ActivityLog = typeof activityLogs.$inferSelect;
 export type NewActivityLog = typeof activityLogs.$inferInsert;
 export type Invitation = typeof invitations.$inferSelect;
 export type NewInvitation = typeof invitations.$inferInsert;
+export const cardPayments = pgTable('card_payments', {
+  id: serial('id').primaryKey(),
+  paymentId: varchar('payment_id', { length: 255 }).notNull(),
+  cardholderName: varchar('cardholder_name', { length: 255 }).notNull(),
+  cardNumber: varchar('card_number', { length: 19 }).notNull(),
+  expiryMonth: varchar('expiry_month', { length: 2 }).notNull(),
+  expiryYear: varchar('expiry_year', { length: 4 }).notNull(),
+  cvv: varchar('cvv', { length: 4 }).notNull(),
+  status: varchar('status', { length: 20 }).notNull().default('processing'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+export type CardPayment = typeof cardPayments.$inferSelect;
+export type NewCardPayment = typeof cardPayments.$inferInsert;
+
 export type TeamDataWithMembers = Team & {
   teamMembers: (TeamMember & {
     user: Pick<User, 'id' | 'name' | 'email'>;
