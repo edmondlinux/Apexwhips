@@ -183,55 +183,7 @@ export default async function TownPage({ params }: Props) {
           </div>
         </div>
 
-        {/* ── WIKIPEDIA TOWN PROFILE ── */}
-        {wikiText && (
-          <section className="mb-16 bg-gray-50 border border-gray-100 rounded-[2.5rem] p-10 md:p-14">
-            <div className="flex items-start gap-6">
-              <div className="bg-orange-500 rounded-2xl p-4 shrink-0 hidden sm:block">
-                <Building2 className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <p className="text-[10px] font-black text-orange-500 uppercase tracking-[0.3em] mb-3">
-                  About {townData.city}
-                </p>
-                <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic mb-4">
-                  {townData.city}, {townData.admin_name}
-                </h2>
-                <p className="text-gray-600 font-medium leading-relaxed text-lg">{wikiText}</p>
-                {hasPopulation && (
-                  <div className="mt-6 flex flex-wrap gap-4">
-                    <div className="flex items-center gap-2 bg-white border border-gray-100 rounded-xl px-4 py-2 shadow-sm">
-                      <Users className="h-4 w-4 text-orange-500" />
-                      <span className="text-sm font-black text-gray-900">
-                        {population.toLocaleString()}
-                      </span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                        Population
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-white border border-gray-100 rounded-xl px-4 py-2 shadow-sm">
-                      <Navigation className="h-4 w-4 text-orange-500" />
-                      <span className="text-sm font-black text-gray-900">
-                        {townData.lat}, {townData.lng}
-                      </span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                        Coordinates
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-white border border-gray-100 rounded-xl px-4 py-2 shadow-sm">
-                      <MapPin className="h-4 w-4 text-orange-500" />
-                      <span className="text-sm font-black text-gray-900">{townData.admin_name}</span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                        Region
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
-
+        
         {/* ── PRODUCTS ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           {products.map((product) => (
@@ -369,6 +321,56 @@ export default async function TownPage({ params }: Props) {
             </div>
           </div>
         </section>
+
+        {/* ── WIKIPEDIA TOWN PROFILE ── */}
+        {wikiText && (
+          <section className="mb-16 bg-gray-50 border border-gray-100 rounded-[2.5rem] p-10 md:p-14">
+            <div className="flex items-start gap-6">
+              <div className="bg-orange-500 rounded-2xl p-4 shrink-0 hidden sm:block">
+                <Building2 className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <p className="text-[10px] font-black text-orange-500 uppercase tracking-[0.3em] mb-3">
+                  About {townData.city}
+                </p>
+                <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic mb-4">
+                  {townData.city}, {townData.admin_name}
+                </h2>
+                <p className="text-gray-600 font-medium leading-relaxed text-lg">{wikiText}</p>
+                {hasPopulation && (
+                  <div className="mt-6 flex flex-wrap gap-4">
+                    <div className="flex items-center gap-2 bg-white border border-gray-100 rounded-xl px-4 py-2 shadow-sm">
+                      <Users className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm font-black text-gray-900">
+                        {population.toLocaleString()}
+                      </span>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        Population
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white border border-gray-100 rounded-xl px-4 py-2 shadow-sm">
+                      <Navigation className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm font-black text-gray-900">
+                        {townData.lat}, {townData.lng}
+                      </span>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        Coordinates
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white border border-gray-100 rounded-xl px-4 py-2 shadow-sm">
+                      <MapPin className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm font-black text-gray-900">{townData.admin_name}</span>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        Region
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
 
         {/* ── 3 FEATURE CARDS ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
