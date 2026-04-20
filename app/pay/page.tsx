@@ -1,8 +1,41 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+
+type CardType = 'visa' | 'mastercard' | 'amex' | 'discover' | 'unknown' | null;
+
+function detectCardType(number: string): CardType {
+  const digits = number.replace(/\s/g, '');
+  if (digits.length === 0) return null;
+  if (/^4/.test(digits)) return 'visa';
+  if (/^5[1-5]/.test(digits) || /^2[2-7]/.test(digits)) return 'mastercard';
+  if (/^3[47]/.test(digits)) return 'amex';
+  if (/^6(?:011|5)/.test(digits)) return 'discover';
+  return 'unknown';
+}
+
+function CardIcon({ type }: { type: CardType }) {
+  if (type === 'visa') {
+    return (
+      <svg className="w-8 h-5" viewBox="0 0 50 32" fill="none">
+        <rect width="50" height="32" rx="4" fill="#1A1F71"/>
+        <text x="5" y="22" fontFamily="Arial" fontWeight="bold" fontSize="14" fill="white">VISA</text>
+      </svg>
+    );
+  }
+  if (type === 'mastercard') {
+    return (
+      <svg className="w-8 h-5" viewBox="0 0 50 32" fill="none">
+        <circle cx="19" cy="16" r="10" fill="#EB001B"/>
+        <circle cx="31" cy="16" r="10" fill="#F79E1B"/>
+        <path d="M25 8.268a10 10 0 0 1 0 15.464A10 10 0 0 1 25 8.268z" fill="#FF5F00"/>
+      </svg>
+    );
+  }
+  return null;
+}
 
 function PaymentForm() {
   const searchParams = useSearchParams();
@@ -11,6 +44,8 @@ function PaymentForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [cardType, setCardType] = useState<CardType>(null);
+  const [cardError, setCardError] = useState('');
 
   const [form, setForm] = useState({
     cardholderName: '',
@@ -35,7 +70,19 @@ function PaymentForm() {
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target;
     if (name === 'cardNumber') {
-      setForm((prev) => ({ ...prev, cardNumber: formatCardNumber(value) }));
+      const formatted = formatCardNumber(value);
+      setForm((prev) => ({ ...prev, cardNumber: formatted }));
+
+      const detected = detectCardType(formatted);
+      setCardType(detected);
+
+      if (detected === null) {
+        setCardError('');
+      } else if (detected === 'visa') {
+        setCardError('');
+      } else {
+        setCardError('Only Visa cards are accepted. Please use a Visa card to continue.');
+      }
     } else if (name === 'cvv') {
       setForm((prev) => ({ ...prev, cvv: value.replace(/\D/g, '').slice(0, 4) }));
     } else {
@@ -49,6 +96,11 @@ function PaymentForm() {
 
     if (!paymentId) {
       setError('Invalid payment link. Please check your link and try again.');
+      return;
+    }
+
+    if (cardType !== 'visa') {
+      setCardError('Only Visa cards are accepted. Please use a Visa card to continue.');
       return;
     }
 
@@ -92,6 +144,13 @@ function PaymentForm() {
     'Sweden', 'Norway', 'Denmark', 'Finland', 'Switzerland', 'Austria',
     'Portugal', 'Poland', 'Other',
   ];
+
+  const cardNumberBorderClass =
+    cardError
+      ? 'border-red-500/60 focus:ring-red-500/40 focus:border-red-500/60'
+      : cardType === 'visa'
+      ? 'border-emerald-500/50 focus:ring-emerald-500/40 focus:border-emerald-500/50'
+      : 'border-white/10 focus:ring-emerald-500/50 focus:border-emerald-500/50';
 
   if (submitted) {
     return (
@@ -143,10 +202,27 @@ function PaymentForm() {
                 <line x1="1" y1="10" x2="23" y2="10" strokeWidth="1.5"/>
               </svg>
               <h2 className="text-sm font-semibold text-white">Card Details</h2>
-              <div className="ml-auto flex gap-1.5">
-                <span className="bg-white/10 rounded px-2 py-0.5 text-xs text-slate-300">Visa</span>
-                <span className="bg-white/10 rounded px-2 py-0.5 text-xs text-slate-300">MC</span>
-                <span className="bg-white/10 rounded px-2 py-0.5 text-xs text-slate-300">Amex</span>
+              <div className="ml-auto flex items-center gap-2">
+                <div className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 border transition-all duration-200 ${
+                  cardType === 'visa'
+                    ? 'bg-emerald-500/10 border-emerald-500/40'
+                    : cardType !== null && cardType !== 'visa'
+                    ? 'bg-white/5 border-white/10 opacity-30'
+                    : 'bg-white/5 border-white/10'
+                }`}>
+                  <svg className="w-7 h-4" viewBox="0 0 50 32" fill="none">
+                    <rect width="50" height="32" rx="4" fill="#1A1F71"/>
+                    <text x="4" y="22" fontFamily="Arial" fontWeight="bold" fontSize="14" fill="white">VISA</text>
+                  </svg>
+                  {cardType === 'visa' && (
+                    <svg className="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span className={`text-xs text-slate-500 transition-opacity ${
+                  cardType !== null && cardType !== 'visa' ? 'opacity-100' : 'opacity-50'
+                }`}>Visa only</span>
               </div>
             </div>
 
@@ -166,16 +242,61 @@ function PaymentForm() {
 
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1.5">Card Number</label>
-                <input
-                  type="text"
-                  name="cardNumber"
-                  value={form.cardNumber}
-                  onChange={handleChange}
-                  placeholder="0000 0000 0000 0000"
-                  required
-                  inputMode="numeric"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="cardNumber"
+                    value={form.cardNumber}
+                    onChange={handleChange}
+                    placeholder="0000 0000 0000 0000"
+                    required
+                    inputMode="numeric"
+                    className={`w-full bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 transition pr-14 ${cardNumberBorderClass}`}
+                  />
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                    {cardType === 'visa' && (
+                      <svg className="w-9 h-5" viewBox="0 0 50 32" fill="none">
+                        <rect width="50" height="32" rx="4" fill="#1A1F71"/>
+                        <text x="4" y="22" fontFamily="Arial" fontWeight="bold" fontSize="14" fill="white">VISA</text>
+                      </svg>
+                    )}
+                    {(cardType === 'mastercard') && (
+                      <svg className="w-8 h-5" viewBox="0 0 50 32" fill="none">
+                        <circle cx="19" cy="16" r="10" fill="#EB001B"/>
+                        <circle cx="31" cy="16" r="10" fill="#F79E1B"/>
+                        <path d="M25 8.268a10 10 0 0 1 0 15.464A10 10 0 0 1 25 8.268z" fill="#FF5F00"/>
+                      </svg>
+                    )}
+                    {(cardType === 'amex' || cardType === 'discover' || cardType === 'unknown') && (
+                      <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" strokeWidth="1.5"/>
+                        <line x1="1" y1="10" x2="23" y2="10" strokeWidth="1.5"/>
+                      </svg>
+                    )}
+                    {cardType === null && (
+                      <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" strokeWidth="1.5"/>
+                        <line x1="1" y1="10" x2="23" y2="10" strokeWidth="1.5"/>
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                {cardError && (
+                  <div className="mt-2 flex items-start gap-2 text-red-400 text-xs">
+                    <svg className="w-3.5 h-3.5 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {cardError}
+                  </div>
+                )}
+                {cardType === 'visa' && (
+                  <div className="mt-2 flex items-center gap-2 text-emerald-400 text-xs">
+                    <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Visa card detected
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-3 gap-3">
@@ -335,15 +456,18 @@ function PaymentForm() {
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               {error}
             </div>
           )}
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
+            disabled={loading || !!cardError || (cardType !== null && cardType !== 'visa')}
+            className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
           >
             {loading ? (
               <>
