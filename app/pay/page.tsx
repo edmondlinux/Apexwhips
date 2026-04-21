@@ -157,23 +157,22 @@ function PaymentForm() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-center shadow-2xl">
-            <div className="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto mb-6">
-              <svg className="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            <div className="w-20 h-20 rounded-full bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-3">Payment Received</h2>
+            <h2 className="text-2xl font-bold text-white mb-3">Payment Pending</h2>
             <p className="text-slate-300 text-base leading-relaxed mb-6">
-              We're processing your payment now. This typically takes no more than{' '}
-              <span className="text-emerald-400 font-semibold">5 minutes</span>. You'll receive a notification once it's completed.
+              Your payment is currently <span className="text-amber-400 font-semibold">pending review</span>. Our team will contact you shortly with confirmation once it has been verified.
             </p>
             <div className="bg-white/5 rounded-xl p-4 border border-white/10">
               <p className="text-xs text-slate-400 mb-1">Payment Reference</p>
               <p className="text-sm font-mono text-slate-200 break-all">{paymentId}</p>
             </div>
             <div className="mt-6 flex items-center justify-center gap-2 text-slate-400 text-sm">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              Processing securely...
+              <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              Awaiting confirmation...
             </div>
           </div>
         </div>
