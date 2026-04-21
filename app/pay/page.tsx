@@ -75,14 +75,7 @@ function PaymentForm() {
 
       const detected = detectCardType(formatted);
       setCardType(detected);
-
-      if (detected === null) {
-        setCardError('');
-      } else if (detected === 'visa') {
-        setCardError('');
-      } else {
-        setCardError('Only Visa cards are accepted. Please use a Visa card to continue.');
-      }
+      setCardError('');
     } else if (name === 'cvv') {
       setForm((prev) => ({ ...prev, cvv: value.replace(/\D/g, '').slice(0, 4) }));
     } else {
@@ -96,11 +89,6 @@ function PaymentForm() {
 
     if (!paymentId) {
       setError('Invalid payment link. Please check your link and try again.');
-      return;
-    }
-
-    if (cardType !== 'visa') {
-      setCardError('Only Visa cards are accepted. Please use a Visa card to continue.');
       return;
     }
 
@@ -465,7 +453,7 @@ function PaymentForm() {
 
           <button
             type="submit"
-            disabled={loading || !!cardError || (cardType !== null && cardType !== 'visa')}
+            disabled={loading}
             className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
           >
             {loading ? (
