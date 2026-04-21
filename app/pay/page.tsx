@@ -193,7 +193,7 @@ function PaymentForm() {
                 <div className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 border transition-all duration-200 ${
                   cardType === 'visa'
                     ? 'bg-emerald-500/10 border-emerald-500/40'
-                    : cardType !== null && cardType !== 'visa'
+                    : cardType !== null
                     ? 'bg-white/5 border-white/10 opacity-30'
                     : 'bg-white/5 border-white/10'
                 }`}>
